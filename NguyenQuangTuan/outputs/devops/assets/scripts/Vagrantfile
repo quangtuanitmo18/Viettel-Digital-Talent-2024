@@ -1,0 +1,74 @@
+ENV['VAGRANT_SERVER_URL'] = 'https://vagrant.elab.pro'
+Vagrant.configure("2") do |config|
+  # cicd-qa-server 
+  config.vm.define "cicd_qa_server" do |cicd_qa_server|
+    cicd_qa_server.vm.provider "virtualbox" do |vb_cicd_qa_server|
+      vb_cicd_qa_server.memory = 3072
+      vb_cicd_qa_server.cpus = 1
+    end
+
+    cicd_qa_server.vm.box = "ubuntu/focal64"
+    cicd_qa_server.vm.hostname = "cicd-qa-server"
+    cicd_qa_server.vm.network "private_network", ip: "192.168.64.140"
+  end
+  
+  # gitlab-server
+  config.vm.define "gitlab_server" do |gitlab_server|
+    gitlab_server.vm.provider "virtualbox" do |vb_gitlab_server|
+      vb_gitlab_server.memory = 3072
+      vb_gitlab_server.cpus = 1
+    end
+
+    gitlab_server.vm.box = "ubuntu/focal64"
+    gitlab_server.vm.hostname = "gitlab-server"
+    gitlab_server.vm.network "private_network", ip: "192.168.64.141"
+  end
+ 
+  # app-server-1
+  config.vm.define "app_server_1" do |app_server_1|
+    app_server_1.vm.provider "virtualbox" do |vb_app_server_1|
+      vb_app_server_1.memory = 1024
+      vb_app_server_1.cpus = 1
+    end
+
+    app_server_1.vm.box = "ubuntu/focal64"
+    app_server_1.vm.hostname = "app-server-1"
+    app_server_1.vm.network "private_network", ip: "192.168.64.142"
+  end
+  
+  # database-server
+  config.vm.define "database_server" do |database_server|
+    database_server.vm.provider "virtualbox" do |vb_database_server|
+      vb_database_server.memory = 1024
+      vb_database_server.cpus = 1
+    end
+
+    database_server.vm.box = "ubuntu/focal64"
+    database_server.vm.hostname = "database-server"
+    database_server.vm.network "private_network", ip: "192.168.64.143"
+  end
+
+  # database-server
+  config.vm.define "app_server_2" do |app_server_2|
+    app_server_2.vm.provider "virtualbox" do |vb_app_server_2|
+      vb_app_server_2.memory = 2048
+      vb_app_server_2.cpus = 1
+    end
+
+    app_server_2.vm.box = "ubuntu/focal64"
+    app_server_2.vm.hostname = "app-server-2"
+    app_server_2.vm.network "private_network", ip: "192.168.64.144"
+
+  end
+
+  config.vm.define "lb_server" do |lb_server|
+    lb_server.vm.provider "virtualbox" do |vb_lb_server|
+      vb_lb_server.memory = 1024
+      vb_lb_server.cpus = 1
+    end
+
+    lb_server.vm.box = "ubuntu/focal64"
+    lb_server.vm.hostname = "lb-server"
+    lb_server.vm.network "private_network", ip: "192.168.64.145"
+  end
+end
