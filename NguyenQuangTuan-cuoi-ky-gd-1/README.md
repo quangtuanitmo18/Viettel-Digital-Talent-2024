@@ -107,7 +107,7 @@ Output:
 
 - Hình ảnh chụp màn hình Kibana kết quả tìm kiếm log của các Service Web và Service API theo url path
 
-<b>Output</b>: Chưa hoàn thành
+<b>Output</b>: [Logging](./outputs/logging/README.md)
 
 ## Security (1.5đ)
 
