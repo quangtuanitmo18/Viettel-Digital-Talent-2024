@@ -1,6 +1,6 @@
-## Setup database MongoDB (database-server: 192.168.64.143)
+## Setup MongoDB database (database-server: 192.168.64.143)
 
-Chạy database MongoDB qua file docker-compose.yml
+Run MongoDB database using the docker-compose.yml file
 
 ```shell
 version: "3.8"
@@ -20,11 +20,11 @@ volumes:
   mongodb_data:
 ```
 
-Với cài đặt biến môi trường `MONGO_INITDB_ROOT_USERNAME=mongo_user`, `MONGO_INITDB_ROOT_PASSWORD=mongo_password` và port được map từ container ra bên ngoài database-server `27017` thì uri đẻ kết nối tới Mongo là:
+With the environment variables set as `MONGO_INITDB_ROOT_USERNAME=mongo_user`, `MONGO_INITDB_ROOT_PASSWORD=mongo_password` and the port mapped from the container to the outside of the database-server `27017`, the URI to connect to Mongo is:
 `mongodb://mongo_user:mongo_password@192.168.64.143:27017`
 
-Trong Database sẽ có 2 instance là `vdt-midterm` và `vdt-midterm-test`.
-`vdt-midterm` sẽ là instance dùng cho môi trường `prod`, còn `vdt-midterm-test` sẽ phục vụ cho các môi trường như `staging`, `dev` hoặc để làm db cho việc chạy test.
+In the Database, there will be 2 instances: `vdt-midterm` and `vdt-midterm-test`.
+`vdt-midterm` will be the instance used for the `prod` environment, while `vdt-midterm-test` will serve environments such as `staging`, `dev`, or as a db for running tests.
 
 <div align="center">
   <img src="../images/mongo-instances.png" alt="MongoDb">

@@ -1,36 +1,36 @@
-## Dùng Vagrant để tạo máy ảo
+## Use Vagrant to create a virtual machine
 
-Vagrant là một công cụ mã nguồn mở được phát triển bởi HashiCorp, được thiết kế để quản lý và tự động hóa việc triển khai môi trường phát triển bằng cách sử dụng máy ảo hoặc container. Nó cho phép các nhà phát triển xây dựng, chia sẻ và duy trì môi trường phát triển đồng nhất và dễ dàng tái tạo trên nhiều hệ thống.
+Vagrant is an open-source tool developed by HashiCorp, designed to manage and automate the deployment of development environments using virtual machines or containers. It allows developers to build, share, and maintain consistent and easily reproducible development environments across multiple systems.
 
-Dưới đây là một số đặc điểm quan trọng của Vagrant:
+Below are some key features of Vagrant:
 
-- Tự động hóa triển khai môi trường: Vagrant cho phép mô tả môi trường phát triển của mình trong một tệp cấu hình đơn giản bằng ngôn ngữ Ruby gọi là Vagrantfile. Bằng cách này, có thể xác định cách môi trường của mình được cấu hình, bao gồm các máy ảo, cài đặt phần mềm, và cấu hình mạng.
+- Automated environment deployment: Vagrant allows you to describe your development environment in a simple configuration file using Ruby called Vagrantfile. This way, you can define how your environment is configured, including virtual machines, software installations, and network configurations.
 
-- Tương thích với nhiều nhà cung cấp ảo hóa: Vagrant hỗ trợ nhiều nhà cung cấp ảo hóa như VirtualBox, VMware, Hyper-V, Docker và nhiều hơn nữa. Điều này cho phép triển khai môi trường phát triển trên nhiều nền tảng mà không phụ thuộc vào hệ thống ảo hóa cụ thể.
+- Compatibility with multiple virtualization providers: Vagrant supports many virtualization providers such as VirtualBox, VMware, Hyper-V, Docker, and more. This allows you to deploy development environments on multiple platforms without relying on a specific virtualization system.
 
-- Quản lý các box: Vagrant sử dụng các "box" làm cơ sở để tạo ra các máy ảo. Box là một hình ảnh máy ảo đã được chuẩn bị trước, bao gồm hệ điều hành và phần mềm cần thiết. Cộng đồng Vagrant cung cấp nhiều box sẵn có cho nhiều môi trường phát triển khác nhau.
+- Managing boxes: Vagrant uses "boxes" as the basis for creating virtual machines. A box is a pre-configured virtual machine image that includes the operating system and necessary software. The Vagrant community provides many available boxes for various development environments.
 
-- Dễ dàng sử dụng và cấu hình: Vagrant cung cấp một loạt các lệnh dễ sử dụng để quản lý các máy ảo và môi trường phát triển. Có thể tạo, khởi động, dừng và xóa các máy ảo một cách dễ dàng từ dòng lệnh.
+- Easy to use and configure: Vagrant provides a range of easy-to-use commands to manage virtual machines and development environments. You can create, start, stop, and delete virtual machines easily from the command line.
 
 <div align="center">
   <img width="1000" src="../images/vagrant.png" alt="Vagrant">
 </div>
 <div align="center">
-<i>Vargant VM Workflow</i>
+<i>Vagrant VM Workflow</i>
 </div>
 <br>
 
-Để cài đặt được máy ảo từ Vagrant trước tiên cần cài `vagrant` và `virtualbox` lên máy trước.
+To install a virtual machine from Vagrant, you first need to install `vagrant` and `virtualbox` on your machine.
 
-Cấu hình máy ảo dựa trên [Vagrantfile](../scripts/Vagrantfile), sau đó chạy lệnh `vagrant up` để khởi tạo máy ảo.
+Configure the virtual machine based on [Vagrantfile](../scripts/Vagrantfile), then run the command `vagrant up` to initialize the virtual machine.
 
-Mặc định các boxes của Vagrant sẽ được lấy từ [Vagrant cloud](https://app.vagrantup.com/boxes/search), tuy nhiên các nước bị cấm sử dụng sẽ không truy cập được đến tài nguyên này (Nga,...). Để khắc phục có thể dùng các nguồn tài nguyên khác như `https://vagrant.elab.pro/downloads/`. Việc cần làm là thêm dòng config `ENV['VAGRANT_SERVER_URL'] = 'https://vagrant.elab.pro'` vào `Vagrantfile`
+By default, Vagrant boxes are fetched from [Vagrant cloud](https://app.vagrantup.com/boxes/search), but countries that are banned from using it (e.g., Russia) cannot access these resources. To overcome this, you can use other resources like `https://vagrant.elab.pro/downloads/`. You need to add the config line `ENV['VAGRANT_SERVER_URL'] = 'https://vagrant.elab.pro'` to the `Vagrantfile`.
 
 <div align="center">
   <img width="1000" src="../images/vagrant-cloud.png" alt="Vagrant cloud">
 </div>
 <div align="center">
-<i>Vargant cloud</i>
+<i>Vagrant cloud</i>
 </div>
 <br>
 
@@ -39,16 +39,16 @@ Mặc định các boxes của Vagrant sẽ được lấy từ [Vagrant cloud](
 </div>
 <br>
 
-Các lệnh hay dùng với Vagrant:
+Commonly used Vagrant commands:
 
-- `vagrant init`: tạo Vagrantfile mới
+- `vagrant init`: create a new Vagrantfile
 
-- `vagrant up`: thực hiện tạo máy ảo
+- `vagrant up`: create the virtual machine
 
-- `vagrant ssh`: truy cập vào máy ảo
+- `vagrant ssh`: access the virtual machine
 
-- `vagrant halt`: dừng máy ảo (shutdown)
+- `vagrant halt`: stop the virtual machine (shutdown)
 
-- `vagrant reload`: chạy lại máy ảo có cập nhật lại cấu hình từ Vagrantfile (khi thay đổi cấu hình máy)
+- `vagrant reload`: restart the virtual machine and update the configuration from the Vagrantfile (when changing machine configuration)
 
-- `vagrant destroy`: xóa máy ảo
+- `vagrant destroy`: delete the virtual machine

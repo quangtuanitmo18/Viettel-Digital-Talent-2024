@@ -1,58 +1,58 @@
-### Setup Nginx làm load balancer (lb-server: 192.168.64.145)
+### Setup Nginx as a load balancer (lb-server: 192.168.64.145)
 
-NGINX là một phần mềm mã nguồn mở phổ biến, chủ yếu được sử dụng như một máy chủ web, máy chủ proxy ngược (reverse proxy), và cân bằng tải (load balancer). Được phát triển bởi Igor Sysoev và ra mắt lần đầu vào năm 2004, NGINX nổi tiếng với hiệu suất cao, khả năng xử lý nhiều kết nối đồng thời, và tính ổn định. Dưới đây là một số thông tin chi tiết về NGINX và vai trò của nó như một load balancer:
+NGINX is a popular open-source software primarily used as a web server, reverse proxy, and load balancer. Developed by Igor Sysoev and first released in 2004, NGINX is known for its high performance, ability to handle many concurrent connections, and stability. Below are some details about NGINX and its role as a load balancer:
 
-- Chức năng chính của NGINX
-  - Web server: NGINX có thể phục vụ các tệp tĩnh (static files) như HTML, CSS, JavaScript và hình ảnh một cách hiệu quả.
-  - Reverse Proxy: NGINX có thể đóng vai trò là một proxy ngược, chuyển tiếp các yêu cầu từ người dùng đến các máy chủ, giúp bảo vệ và ẩn máy chủ khỏi người dùng cuối.
-  - Load Balancer: NGINX có thể phân phối tải truy cập đến nhiều máy chủ để tối ưu hóa tài nguyên và cải thiện hiệu suất ứng dụng.
-  - Security: NGINX cung cấp nhiều tính năng bảo mật như chặn IP, giới hạn tốc độ, và SSL/TLS termination.
-  - Caching: NGINX hỗ trợ caching để tăng tốc độ phản hồi của các ứng dụng web.
+- Main functions of NGINX
+  - Web server: NGINX can efficiently serve static files such as HTML, CSS, JavaScript, and images.
+  - Reverse Proxy: NGINX can act as a reverse proxy, forwarding requests from users to servers, helping protect and hide the server from end-users.
+  - Load Balancer: NGINX can distribute traffic to multiple servers to optimize resources and improve application performance.
+  - Security: NGINX provides many security features such as IP blocking, rate limiting, and SSL/TLS termination.
+  - Caching: NGINX supports caching to speed up web application responses.
 
 <div align="center">
   <img width="600" src="../images/nginx.png" alt="Nginx">
 </div>
 <br>
 
-**NGINX như một Load Balancer**
+**NGINX as a Load Balancer**
 
-Load balancer là một thành phần quan trọng trong các hệ thống phân tán, giúp phân phối lưu lượng truy cập đồng đều đến các máy chủ để đảm bảo hiệu suất và tính sẵn sàng của ứng dụng. NGINX có thể thực hiện cân bằng tải thông qua các phương pháp sau:
+A load balancer is an essential component in distributed systems, helping distribute traffic evenly to servers to ensure application performance and availability. NGINX can perform load balancing through the following methods:
 
-Các phương pháp cân bằng tải:
+Load balancing methods:
 
-- Round Robin: Phương pháp mặc định, phân phối các yêu cầu theo thứ tự tuần tự đến từng máy chủ.
-- Least Connections: Phân phối yêu cầu đến máy chủ có ít kết nối nhất hiện tại, giúp giảm tải cho các máy chủ bận rộn.
-- IP Hash: Sử dụng hash của địa chỉ IP của khách hàng để xác định máy chủ, giúp duy trì phiên làm việc của người dùng.
-- Weight: Định nghĩa trọng số cho mỗi máy chủ, máy chủ có trọng số cao hơn sẽ nhận nhiều yêu cầu hơn.
+- Round Robin: The default method, distributing requests sequentially to each server.
+- Least Connections: Distributes requests to the server with the fewest current connections, helping reduce the load on busy servers.
+- IP Hash: Uses a hash of the client's IP address to determine the server, helping maintain user session persistence.
+- Weight: Defines a weight for each server, with higher-weighted servers receiving more requests.
 
-#### Cài đặt và cấu hình nginx làm load balancer
+#### Install and configure NGINX as a load balancer
 
-Cài Nginx thông qua lệnh `sudo apt install nginx`.
-Thay đổi nội dung của file `nginx.conf` trong đường dẫn `/etc/nginx/`
+Install NGINX using the command `sudo apt install nginx`.
+Change the content of the `nginx.conf` file in the `/etc/nginx/` directory.
 
 **_Upstream_**
 
-Các khối upstream web và upstream api định nghĩa các nhóm máy chủ để cân bằng tải. Các khối này xác định các máy chủ sẽ xử lý các yêu cầu cho từng dịch vụ.
+The upstream web and upstream api blocks define groups of servers for load balancing. These blocks specify the servers that will handle requests for each service.
 
-- upstream web có hai máy chủ: `192.168.64.142:80` và `192.168.64.144:80`.
-- upstream api có hai máy chủ: `192.168.64.142:4000` và `192.168.64.144:4000`.
+- upstream web has two servers: `192.168.64.142:80` and `192.168.64.144:80`.
+- upstream api has two servers: `192.168.64.142:4000` and `192.168.64.144:4000`.
 
 **_Server_**
 
-Định nghĩa một máy chủ lắng nghe trên cổng 80.
+Defines a server listening on port 80.
 
 - location `/`:
 
-  - Xử lý tất cả các yêu cầu đến URL gốc.
-  - proxy_pass `http://web;` chuyển tiếp các yêu cầu đến nhóm upstream web.
+  - Handles all requests to the root URL.
+  - proxy_pass `http://web;` forwards requests to the upstream web group.
 
 - location `/api`:
 
-  - Xử lý tất cả các yêu cầu đến URL bắt đầu bằng `/api`.
-  - rewrite `^/api/(.\*)$ /$1 break;`:
-    - Quy tắc rewrite này loại bỏ `/api` khỏi URI yêu cầu trước khi chuyển nó tới các máy chủ .
-    - Ví dụ, một yêu cầu đến `/api/users/list` sẽ được rewrite thành `/users/list` trước khi được chuyển tiếp.
-  - proxy_pass `http://api;` chuyển tiếp các yêu cầu đến nhóm upstream api.
+  - Handles all requests to URLs starting with `/api`.
+  - rewrite `^/api/(.*)$ /$1 break;`:
+    - This rewrite rule removes `/api` from the request URI before forwarding it to the servers.
+    - For example, a request to `/api/users/list` will be rewritten to `/users/list` before being forwarded.
+  - proxy_pass `http://api;` forwards requests to the upstream api group.
 
 ```shell
 events {
@@ -71,7 +71,7 @@ http {
     }
     server {
         listen 80;
-        # Confiduration for web
+        # Configuration for web
         location / {
             proxy_pass http://web;
         }
@@ -84,7 +84,7 @@ http {
 }
 ```
 
-Với cấu hình Nginx như trên thì khi truy cập đến `192.168.64.145` sẽ được điều hướng đến `192.168.64.142` hoặc `192.168.64.144`. Tương tự khi truy cập vào `192.168.64.145/api` sẽ được điều hướng tới `192.168.64.142:4000` hoặc `192.168.64.144:4000`
+With the above NGINX configuration, accessing `192.168.64.145` will be directed to `192.168.64.142` or `192.168.64.144`. Similarly, accessing `192.168.64.145/api` will be directed to `192.168.64.142:4000` or `192.168.64.144:4000`.
 
 <br>
 <div align="center">

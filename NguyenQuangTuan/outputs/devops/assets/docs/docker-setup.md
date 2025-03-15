@@ -1,16 +1,16 @@
-## Cài đặt docker và docker-compose lên trên các server
+## Install docker and docker-compose on the servers
 
-File [docker-setup.sh](../scripts/docker-setup.sh) cho việc cài đặt docker và docker-compose.
+File [docker-setup.sh](../scripts/docker-setup.sh) for installing docker and docker-compose.
 
 `touch docker-setup.sh && chmod +x docker-setup.sh && vim docker-setup.sh`
 
-`./docker-setup.sh` chạy script cài đặt docker và kiểm tra version được kết quả như dưới đây
+`./docker-setup.sh` run the script to install docker and check the version as shown below
 
 <div align="center">
   <img width="600" src="../images/jenkisn-docker-dockercompose-ver.png" alt="Docker and docker-compose version">
 </div>
 <br>
 
-Bên trên là cài đặt docker và docker-compose lên `cicd-qa-server: 192.168.64.140`, đối với các server khác thực hiện tương tự.
+The above is the installation of docker and docker-compose on `cicd-qa-server: 192.168.64.140`, for other servers, do the same.
 
-**_Sau khi cài đặt Ansible thì có thể dùng Ansible để cài đặt docker và docker-compose lên các target host sẽ nhanh và tiện lợi hơn._**
+**_After installing Ansible, you can use Ansible to install docker and docker-compose on target hosts more quickly and conveniently._**

@@ -1,31 +1,27 @@
 # Monitoring
 
-## 1. Mô tả
+## 1. Description
 
-Monitoring là quá trình thu thập, phân tích và sử dụng dữ liệu về hệ thống hoặc ứng dụng để đảm bảo chúng hoạt động một cách chính xác và hiệu quả. Mục tiêu của monitoring bao gồm:
+Monitoring is the process of collecting, analyzing, and using data about a system or application to ensure it operates correctly and efficiently. The goals of monitoring include:
 
-- Phát hiện sự cố sớm: Nhận diện các vấn đề trước khi chúng ảnh hưởng đến người dùng hoặc gây ra thiệt hại nghiêm trọng.
-- Tối ưu hóa hiệu suất: Đảm bảo rằng hệ thống hoặc ứng dụng hoạt động tối ưu.
-- Đưa ra quyết định dựa trên dữ liệu: Cung cấp thông tin chính xác để giúp quản lý và phát triển hệ thống tốt hơn.
-- Đảm bảo tính sẵn sàng: Đảm bảo rằng các dịch vụ luôn sẵn sàng cho người dùng.
+- Early detection of issues: Identifying problems before they affect users or cause significant damage.
+- Performance optimization: Ensuring the system or application operates optimally.
+- Data-driven decision making: Providing accurate information to help manage and develop the system better.
+- Ensuring availability: Ensuring services are always available to users.
 
-Các thành phần cơ bản của một hệ thống monitoring bao gồm:
+The basic components of a monitoring system include:
 
-- Metrics (số liệu): Dữ liệu đo lường từ hệ thống (như CPU usage, memory usage, request rate).
-- Logs (nhật ký): Dữ liệu chi tiết về các sự kiện xảy ra trong hệ thống.
-- Alerts (cảnh báo): Thông báo khi có sự cố hoặc điều kiện không bình thường xảy ra.
+- Metrics: Measurement data from the system (such as CPU usage, memory usage, request rate).
+- Logs: Detailed data about events occurring in the system.
+- Alerts: Notifications when issues or abnormal conditions occur.
 
-Prometheus là một hệ thống giám sát và cảnh báo mã nguồn mở, ban đầu được phát triển bởi SoundCloud. Prometheus được thiết kế để thu thập và lưu trữ các metrics thời gian thực trong một cơ sở dữ liệu chuỗi thời gian. Nó hỗ trợ một ngôn ngữ truy vấn mạnh mẽ để phân tích dữ liệu. Dưới đây là cách Prometheus hoạt động:
+Prometheus is an open-source monitoring and alerting system initially developed by SoundCloud. Prometheus is designed to collect and store real-time metrics in a time-series database. It supports a powerful query language for data analysis. Here is how Prometheus works:
 
-- Scraping: Prometheus định kỳ lấy dữ liệu từ các endpoints được cấu hình (gọi là targets) thông qua HTTP. Các endpoints này phải cung cấp dữ liệu metrics theo định dạng Prometheus exposition format.
-
-- Storage: Prometheus lưu trữ dữ liệu metrics trong cơ sở dữ liệu chuỗi thời gian của nó.
-
-- Querying: Người dùng có thể sử dụng PromQL, ngôn ngữ truy vấn của Prometheus, để truy vấn và phân tích dữ liệu metrics.
-
-- Alerting: Prometheus tích hợp với Alertmanager để gửi cảnh báo dựa trên các điều kiện được định nghĩa bởi người dùng.
-
-- Visualization: Prometheus có thể được tích hợp với các công cụ như Grafana để hiển thị dữ liệu metrics dưới dạng biểu đồ và dashboards.
+- Scraping: Prometheus periodically collects data from configured endpoints (called targets) via HTTP. These endpoints must provide metrics data in the Prometheus exposition format.
+- Storage: Prometheus stores metrics data in its time-series database.
+- Querying: Users can use PromQL, Prometheus's query language, to query and analyze metrics data.
+- Alerting: Prometheus integrates with Alertmanager to send alerts based on user-defined conditions.
+- Visualization: Prometheus can be integrated with tools like Grafana to display metrics data as charts and dashboards.
 
 <div align="center">
   <img width="1000" src="./assets/images/monitoring-1.png" alt="Prometheus monitoring">
@@ -40,69 +36,69 @@ Prometheus là một hệ thống giám sát và cảnh báo mã nguồn mở, b
 
 ## 2. Output
 
-### 2.1 Expose metrics của web và api service
+### 2.1 Expose metrics of web and api services
 
-Với Api service do là chạy dưới server nên là việc expose metric chỉ cần cài thêm 1 số package, trong bài lab này dùng [prom-client](https://www.npmjs.com/package/prom-client)
+For the Api service, since it runs on a server, exposing metrics only requires installing some additional packages. In this lab, [prom-client](https://www.npmjs.com/package/prom-client) is used.
 
-Thực hiện cài đặt và implement package trên vào code Api server Nodejs
+Install and implement the package on the Nodejs Api server.
 
 <div align="center">
   <img width="1000" src="./assets/images/monitoring-2.png" alt="">
 </div>
 <br>
 
-Còn đối với Web service cần chạy thêm 1 sidecar container ([Nginx prometheus exporter](https://github.com/nginxinc/nginx-prometheus-exporter))
+For the Web service, an additional sidecar container ([Nginx prometheus exporter](https://github.com/nginxinc/nginx-prometheus-exporter)) is needed.
 
-Mô hình Sidecar Container thường được sử dụng trong các ứng dụng container hóa để thêm chức năng mà không cần phải sửa đổi ứng dụng chính. Trong trường hợp này, sử dụng Nginx làm web server cho Reactjs và một Prometheus Exporter để expose các metrics từ Nginx, cho phép Prometheus thu thập chúng.
+The Sidecar Container pattern is often used in containerized applications to add functionality without modifying the main application. In this case, Nginx is used as the web server for Reactjs, and a Prometheus Exporter is used to expose metrics from Nginx, allowing Prometheus to collect them.
 
-Service web chạy trên web server nginx, dưới đây là file cấu hình nginx
+The web service runs on the Nginx web server. Below is the Nginx configuration file.
 
 <div align="center">
   <img width="1000" src="./assets/images/monitoring-3.png" alt="">
 </div>
 <br>
 
-Cần cập nhật thêm helm-chart (service, deployment) và file values ở repo config
+Update the helm-chart (service, deployment) and values file in the config repo:
 
-- `api`: Cập nhật thêm labels, tên của port nhằm phục vụ cho việc service monitor có thể bắt được service chạy api (xem tại các pr [vdt-midterm-api/update-helm-chart](https://github.com/quangtuanitmo18/VDT-midterm-api/pull/9/files), [vdt-config-helm-api/update-values](https://github.com/quangtuanitmo18/VDT-config-helm-api/pull/1))
-- `web`: Cập nhật thêm labels, tên của port nhằm phục vụ cho việc service monitor có thể bắt được service chạy web và thêm sidecar container `Nginx prometheus expoter` để bắt được metrics của web (xem tại các pr [vdt-midterm-web/update-helm-chart](https://github.com/quangtuanitmo18/VDT-midterm-web/pull/7/files), [vdt-config-helm-web/update-values](https://github.com/quangtuanitmo18/VDT-config-helm-web/pull/1))
+- `api`: Add labels and port names to allow the service monitor to detect the api service (see PRs [vdt-midterm-api/update-helm-chart](https://github.com/quangtuanitmo18/VDT-midterm-api/pull/9/files), [vdt-config-helm-api/update-values](https://github.com/quangtuanitmo18/VDT-config-helm-api/pull/1))
+- `web`: Add labels and port names to allow the service monitor to detect the web service and add a sidecar container `Nginx prometheus exporter` to capture web metrics (see PRs [vdt-midterm-web/update-helm-chart](https://github.com/quangtuanitmo18/VDT-midterm-web/pull/7/files), [vdt-config-helm-web/update-values](https://github.com/quangtuanitmo18/VDT-config-helm-web/pull/1))
 
-### 2.2 Triển khai Prometheus lên K8s cluster
+### 2.2 Deploy Prometheus on the K8s cluster
 
-Cài đặt Prometheus trên Kubernetes thông qua Prometheus Operator là một cách tiếp cận linh hoạt và mạnh mẽ hơn so với việc sử dụng Helm trực tiếp. Prometheus Operator cung cấp các Custom Resource Definitions (CRDs) và Controllers để quản lý và cấu hình các thành phần Prometheus trên Kubernetes
+Installing Prometheus on Kubernetes via Prometheus Operator is a more flexible and powerful approach compared to using Helm directly. Prometheus Operator provides Custom Resource Definitions (CRDs) and Controllers to manage and configure Prometheus components on Kubernetes.
 
-Chạy các lệnh dưới đây để cài Prometheus Operator
+Run the following commands to install Prometheus Operator:
 
 <div align="center">
   <img width="1000" src="./assets/images/monitoring-4.png" alt="">
 </div>
 <br>
 
-Check các pods của prometheus
+Check the Prometheus pods:
 
 <div align="center">
   <img width="1000" src="./assets/images/monitoring-5.png" alt="">
 </div>
 <br>
 
-Chạy lệnh dưới để expose service `prometheus-operator-kube-p-prometheus` ra NodePort với port `32090`
+Run the following command to expose the `prometheus-operator-kube-p-prometheus` service to NodePort on port `32090`:
 
 `kubectl patch svc prometheus-operator-kube-p-prometheus -n monitoring -p '{"spec": {"type": "NodePort", "ports": [{"port": 9090, "targetPort": 9090, "nodePort": 32090}]}}'`
 
-Truy cập và port `32090` để mở giao diện prometheus trên trình duyệt
+Access port `32090` to open the Prometheus interface in the browser:
 
 <div align="center">
   <img width="1000" src="./assets/images/monitoring-6.png" alt="">
 </div>
 <br>
 
-### 2.3 Sử dụng Service Monitor của Prometheus Operator
+### 2.3 Using Prometheus Operator's Service Monitor
 
-Sử dụng Service Monitor của Prometheus Operator để giám sát Web Deployment và API Deployment
+Use Prometheus Operator's Service Monitor to monitor Web Deployment and API Deployment.
 
-**Giám sát Web Deployment**
+**Monitor Web Deployment**
 
-Tạo file `web-service-monitor.yaml` và apply lên cluster
+Create the `web-service-monitor.yaml` file and apply it to the cluster:
 
 ```shell
 apiVersion: monitoring.coreos.com/v1
@@ -126,29 +122,29 @@ spec:
     interval: 15s
 ```
 
-Describe service của web ra thấy đối với metrics của web đã được expose bằng `Nginx prometheus exporter` qua cổng `9100` và tên của cổng là `metrics`
+Describe the web service to see that the web metrics have been exposed by `Nginx prometheus exporter` on port `9100` with the port name `metrics`.
 
 <div align="center">
   <img width="1000" src="./assets/images/sm-web-1.png" alt="">
 </div>
 <br>
 
-Get thử metrics qua `curl`
+Get metrics using `curl`:
 
 <div align="center">
   <img width="1000" src="./assets/images/sm-web-2.png" alt="">
 </div>
 <br>
 
-Hình ảnh danh sách target của Web Deployment được giám sát bởi Prometheus
+Image of the target list of Web Deployment monitored by Prometheus:
 
 <div align="center">
   <img width="1000" src="./assets/images/sm-web-3.png" alt="">
 </div>
 
-**Giám sát Api Deployment**
+**Monitor Api Deployment**
 
-Tạo file `api-service-monitor.yaml` và apply lên cluster
+Create the `api-service-monitor.yaml` file and apply it to the cluster:
 
 ```shell
 apiVersion: monitoring.coreos.com/v1
@@ -172,21 +168,21 @@ spec:
     interval: 15s
 ```
 
-Đối với metrics của api thì sẽ qua path `metrics` cổng `4000` với tên cổng là `http`
+For the api metrics, they are exposed via the `metrics` path on port `4000` with the port name `http`.
 
 <div align="center">
   <img width="1000" src="./assets/images/sm-api-1.png" alt="">
 </div>
 <br>
 
-Get thử metrics qua `curl`
+Get metrics using `curl`:
 
 <div align="center">
   <img width="1000" src="./assets/images/sm-api-2.png" alt="">
 </div>
 <br>
 
-Hình ảnh danh sách target của Api Deployment được giám sát bởi Prometheus
+Image of the target list of Api Deployment monitored by Prometheus:
 
 <div align="center">
   <img width="1000" src="./assets/images/sm-api-3.png" alt="">

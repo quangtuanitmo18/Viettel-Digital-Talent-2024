@@ -1,143 +1,143 @@
-# Bài tập lớn cuối kỳ chương trình VDT 2024 lĩnh vực Cloud
+# Final Project for VDT 2024 Cloud Program
 
-## Triển khai Kubernetes (1 điểm)
+## Deploy Kubernetes (1 point)
 
-Yêu cầu (1 trong 2):
+Requirement (choose 1 of 2):
 
-- Triển khai được Kubernetes thông qua công cụ minikube trên 1 node: 0.5 điểm
+- Deploy Kubernetes using minikube on 1 node: 0.5 points
 
-- Triển khai được Kubernetes thông qua công cụ kubeadm hoặc kubespray lên 1 master node VM + 1 worker node VM: 1 điểm
+- Deploy Kubernetes using kubeadm or kubespray on 1 master node VM + 1 worker node VM: 1 point
 
 Output:
 
-- Tài liệu cài đặt
-- Log của các lệnh kiểm tra hệ thống như: kubectl get nodes - o wide
+- Installation documentation
+- Logs of system check commands such as: kubectl get nodes -o wide
 
 <b>Output</b>: [Kubernetes](./outputs/k8s/README.md)
 
-## Triển khai web application sử dụng các DevOps tools & practices (5đ)
+## Deploy web application using DevOps tools & practices (5 points)
 
-#### 1. K8S Helm Chart (1.5đ)
+#### 1. K8S Helm Chart (1.5 points)
 
-Yêu cầu 1:
+Requirement 1:
 
-- Cài đặt ArgoCD lên Kubernetes Cluster, expose được ArgoCD qua NodePort
-- Trong trường hợp sử dụng cụm Lab trên Viettel Cloud, cài đặt Loadbalancer lên Bastion Node thông qua công cụ docker-compose, expose port ArgoCD ra môi trường public thông qua một trong số các port đã được cấp cho từng sinh viên
+- Install ArgoCD on Kubernetes Cluster, expose ArgoCD via NodePort
+- If using the lab cluster on Viettel Cloud, install Loadbalancer on Bastion Node using docker-compose, expose ArgoCD port to the public environment through one of the ports assigned to each student
 
 Output 1:
 
-- File manifests sử dụng để triển khai ArgoCD lên K8S Cluster
-- File config, docker-compose.yaml sử dụng để triển khai loadbalancer của ArgoCD lên Bastion Node (trong trường hợp sử dụng cụm lab trên Viettel Cloud)
-- Ảnh chụp giao diện màn hình hệ thống ArgoCD khi truy cập qua trình duyệt trình duyệt
+- Manifests files used to deploy ArgoCD on K8S Cluster
+- Config file, docker-compose.yaml used to deploy ArgoCD loadbalancer on Bastion Node (if using the lab cluster on Viettel Cloud)
+- Screenshot of ArgoCD system interface when accessed via browser
 
-Yêu cầu 2:
+Requirement 2:
 
-- Viết 2 Helm Chart cho web Deployment và api Deployment, để vào 1 folder riêng trong repo web và repo api
-- Tạo 2 Repo Config cho web và api, trong các repo này chứa các file values.yaml với nội dung của cá file values.yaml là các config cần thiết để chạy web và api trên k8s bằng Helm Chart
-- Sử dụng tính năng multiple sources của ArgoCD để triển khai các service web và api service lên K8S Cluster theo hướng dẫn của ArgoCD, expose các service này dưới dạng NodePort
-- Trong trường hợp sử dụng cụm Lab trên Viettel Cloud, cài đặt Loadbalancer lên Bastion Node thông qua công cụ docker-compose, expose 2 port của Web ra môi trường public thông qua một trong số các port đã được cấp cho từng sinh viên
+- Write 2 Helm Charts for web Deployment and api Deployment, place them in a separate folder in the web repo and api repo
+- Create 2 Config Repos for web and api, containing values.yaml files with necessary configs to run web and api on k8s using Helm Chart
+- Use ArgoCD's multiple sources feature to deploy web and api services on K8S Cluster as per ArgoCD's guide, expose these services as NodePort
+- If using the lab cluster on Viettel Cloud, install Loadbalancer on Bastion Node using docker-compose, expose 2 ports of Web to the public environment through one of the ports assigned to each student
 
 Output 2:
 
-- Các Helm Chart sử dụng để triển khai web Deployment và api Deployment lên K8S Cluster
-- Các file values.yaml trong 2 config repo của của web service và api service
-- Manifest của ArgoCD Application
-- File config, docker-compose.yaml sử dụng để triển khai loadbalancer của ArgoCD lên Bastion Node (trong trường hợp sử dụng cụm lab trên Viettel Cloud)
-- Ảnh chụp giao diện màn hình hệ thống ArgoCD trên trình duyệt
-- Ảnh chụp giao diện màn hình trình duyệt khi truy cập vào Web URL, API URL
+- Helm Charts used to deploy web Deployment and api Deployment on K8S Cluster
+- values.yaml files in 2 config repos of web service and api service
+- ArgoCD Application manifest
+- Config file, docker-compose.yaml used to deploy ArgoCD loadbalancer on Bastion Node (if using the lab cluster on Viettel Cloud)
+- Screenshot of ArgoCD system interface on browser
+- Screenshot of browser interface when accessing Web URL, API URL
 
-<b>Output</b>: [Helm-Chart và ArgoCD](./outputs/helmChart-argocd/README.md)
+<b>Output</b>: [Helm-Chart and ArgoCD](./outputs/helmChart-argocd/README.md)
 
-#### 2. Continuous Delivery (1.5đ)
+#### 2. Continuous Delivery (1.5 points)
 
-Yêu cầu:
+Requirement:
 
-- Viết 2 luồng CD cho 2 repo web và api, khi có 1 tag mới được tạo ra trên trên 1 trong 2 repo này thì luồng deploy tương ứng của repo đó thực hiện các công việc sau:
+- Write 2 CD pipelines for 2 repos web and api, when a new tag is created on one of these repos, the corresponding deploy pipeline of that repo performs the following tasks:
 
-  - Build docker image với image tag là tag name đã được tạo ra trên gitlab và push docker image sau khi build xong lên Docker Hub
-  - Sửa giá trị Image version trong file values.yaml trong config repo và push thay đổi lên config repo
+  - Build docker image with image tag as the tag name created on gitlab and push the built docker image to Docker Hub
+  - Update Image version value in values.yaml file in config repo and push the change to config repo
 
-- Cấu hình ArgoCD tự động triển khai lại web Deployment và api Deployment khi có sự thay đổi trên config repo.
+- Configure ArgoCD to automatically redeploy web Deployment and api Deployment when there is a change in config repo.
 
 Output:
 
-- Các file setup công cụ của 2 luồng CD
-- Output log của 2 luồng CD khi tạo tag mới trên repo web và repo api
-- Hình ảnh app triển khai argoCD, hình ảnh diff khi argoCD phát hiện thay đổi ở config repo tương tự hình ảnh sau
-- Các hình ảnh demo khác như danh sách event trong app
+- Setup files for 2 CD pipelines
+- Output log of 2 CD pipelines when creating a new tag on web repo and api repo
+- Screenshot of app deployed by argoCD, screenshot of diff when argoCD detects changes in config repo similar to the image below
+- Other demo images such as event list in the app
 
 <b>Output</b>: [CD](./outputs/cd/README.md)
 
-#### 3. Monitoring (1.5đ)
+#### 3. Monitoring (1.5 points)
 
-Yêu cầu:
+Requirement:
 
-- Expose metric của web service và api service ra 1 http path.
-- Triển khai Prometheus lên Kubernetes Cluster thông qua Prometheus Operator, phơi ra ngoài dưới dạng NodePort
-- Expose Prometheus dưới dạng Nodeport
-- Trong trường hợp sử dụng cụm lab của Viettel Cloud, tạo 1 load balancer với backend là NodePort Service của Prometheus, để expose Prometheus UI ra Public Internet
-- Sử dụng Service Monitor của Prometheus Operator để giám sát Web Deployment và API Deployment
+- Expose metrics of web service and api service on an http path.
+- Deploy Prometheus on Kubernetes Cluster using Prometheus Operator, expose it as NodePort
+- Expose Prometheus as NodePort
+- If using the lab cluster on Viettel Cloud, create a load balancer with backend as NodePort Service of Prometheus, to expose Prometheus UI to Public Internet
+- Use Prometheus Operator's Service Monitor to monitor Web Deployment and API Deployment
 
 Output:
 
-- Các file setup để triển khai Prometheus lên Kubernetes Cluster
-- Hình ảnh khi truy cập vào Prometheus UI thông qua trình duyệt
-- Hình ảnh danh sách target của Web Deployment và API Deployment được giám sát bởi Prometheus
+- Setup files to deploy Prometheus on Kubernetes Cluster
+- Screenshot when accessing Prometheus UI via browser
+- Screenshot of target list of Web Deployment and API Deployment monitored by Prometheus
 
 <b>Output</b>: [Monitoring](./outputs/monitoring/README.md)
 
-#### 3. Logging (1.5đ)
+#### 4. Logging (1.5 points)
 
-Yêu cầu:
+Requirement:
 
-- Sử dụng Kubernetes DaemonSet triển khai fluentd hoặc fluentbit lên kubernetes đẩy log của các Deployment Web Deployment và API Deployment lên cụm ElasticSearch tập trung với prefix index dưới dạng tên_sinh_viên_viết_tắt_sdt: Ví dụ: conghm_012345678
+- Use Kubernetes DaemonSet to deploy fluentd or fluentbit on kubernetes to push logs of Web Deployment and API Deployment to a centralized ElasticSearch cluster with index prefix in the format student_name_abbreviation_phone_number: Example: conghm_012345678
 
-Thông tin cụm ES tập trung:
+Centralized ES cluster information:
 
 - Username: elastic
 - Password: iRsUoyhqW-CyyGdwk6V\_
 - Elastic Search URL: https://116.103.226.146:9200
 - Kibana URL: http://116.103.226.146:5601/login?next=%2Fapp%2Fdiscover#/
-- Cấu hình logging cho web service và api service, đảm bảo khi có http - request gửi vào web service hoặc api service thì trong các log mà các service này sinh ra, có ít nhất 1 log có các thông tin:
-  - Request Path(VD: /api1/1, /api2/3 ..)
-  - HTTP Method VD: (GET PUT POST…)
+- Configure logging for web service and api service, ensure that when an http request is sent to web service or api service, at least 1 log contains the following information:
+  - Request Path (e.g., /api1/1, /api2/3 ..)
+  - HTTP Method (e.g., GET, PUT, POST…)
   - Response Code: 302, 200, 202, 201…
 
 Output:
 
-- Hình ảnh chụp màn hình Kibana kết quả tìm kiếm log của các Service Web và Service API theo url path
+- Screenshot of Kibana search results for logs of Web Service and API Service by url path
 
-<b>Output</b>: Chưa hoàn thành
+<b>Output</b>: Not completed
 
-## Security (1.5đ)
+## Security (1.5 points)
 
-Yêu cầu 1 (1đ):
+Requirement 1 (1 point):
 
-- Dựng HAProxy Loadbalancer trên 1 VM riêng (trong trường hợp cụm lab riêng của sinh viên) hoặc trên Basion Node (trường hợp sử dụng cụm Lab của Viettel Cloud) với mode TCP, mở 2 port web_port và api_port trên LB trỏ đến 2 NodePort của Web Deployment và API Deployment trên K8S Cluster. (0.5)
-- Sử dụng 1 trong 2 giải pháp Ingress, hoặc haproxy sidecar container cho các deployment, đảm bảo các truy cập đến các port web_port và api_port sử dụng https (0.5)
-- Cho phép sinh viên sử dụng self-signed cert để làm bài
+- Set up HAProxy Loadbalancer on a separate VM (if using a student's own lab cluster) or on Bastion Node (if using Viettel Cloud lab cluster) with TCP mode, open 2 ports web_port and api_port on LB pointing to 2 NodePorts of Web Deployment and API Deployment on K8S Cluster. (0.5)
+- Use one of the solutions Ingress, or haproxy sidecar container for deployments, ensure that accesses to web_port and api_port use https (0.5)
+- Allow students to use self-signed cert for the assignment
 
 Output 1:
 
-- File cấu hình của HAProxy Loadbalancer cho web port và api port
-- File cấu hình ingress hoặc file cấu hình deployment sau khi thêm HAProxy sidecar container vào Deployment
-- Kết quả truy cập vào web port và api port từ trình duyệt thông qua giao thức https hoặc dùng curl.
+- Configuration file of HAProxy Loadbalancer for web port and api port
+- Ingress configuration file or deployment configuration file after adding HAProxy sidecar container to Deployment
+- Result of accessing web port and api port from browser via https or using curl.
 
-Yêu cầu 2 (1đ):
+Requirement 2 (1 point):
 
-- Đảm bảo 1 số URL của api service khi truy cập phải có xác thực thông qua 1 trong số các phương thức cookie, basic auth, token auth, nếu không sẽ trả về HTTP response code 403. (0.5)
-- Thực hiện phân quyền cho 2 loại người dùng trên API:
-  - Nếu người dùng có role là user thì truy cập vào GET request trả về code 200, còn truy cập vào POST/DELETE thì trả về 403
-  - Nếu người dùng có role là admin thì truy cập vào GET request trả về code 200, còn truy cập vào POST/DELETE thì trả về 2xx
+- Ensure that some URLs of api service require authentication using one of the methods cookie, basic auth, token auth, otherwise return HTTP response code 403. (0.5)
+- Implement authorization for 2 types of users on API:
+  - If the user has role user, accessing GET request returns code 200, while accessing POST/DELETE returns 403
+  - If the user has role admin, accessing GET request returns code 200, while accessing POST/DELETE returns 2xx
 
 Output 2:
 
-- File trình bày giải pháp sử dụng để authen/authorization cho các service
-- Kết quả HTTP Response khi curl hoặc dùng postman gọi vào các URL khi truyền thêm thông tin xác thực và khi không truyền thông tin xác thực
-- Kết quả HTTP Response khi curl hoặc dùng postman vào các URL với các method GET/POST/DELETE khi lần lượt dùng thông tin xác thực của các user có role là user và admin
+- Document presenting the solution used for authentication/authorization for the services
+- Result of HTTP Response when using curl or postman to call URLs with and without authentication information
+- Result of HTTP Response when using curl or postman to call URLs with GET/POST/DELETE methods using authentication information of users with roles user and admin
 
-Yêu cầu 3 (1đ):
+Requirement 3 (1 point):
 
-- Sử dụng 1 trong số các giải pháp để ratelimit cho Endpoint của api Service, sao cho nếu có quá 10 request trong 1 phút gửi đến Endpoint của api service thì các request sau đó bị trả về HTTP Response 409
+- Use one of the solutions to ratelimit the Endpoint of api Service, so that if there are more than 10 requests in 1 minute sent to the Endpoint of api service, subsequent requests are returned with HTTP Response 409
 
 <b>Output</b>: [Security](./outputs/security/README.md)

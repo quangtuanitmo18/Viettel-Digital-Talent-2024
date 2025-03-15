@@ -1,14 +1,14 @@
 # Kubernetes
 
-## 1. Mô tả
+## 1. Description
 
-**Kubernetes**, thường được gọi là K8s, là một hệ thống mã nguồn mở để tự động hóa việc triển khai, mở rộng, và quản lý các ứng dụng container. Được phát triển bởi Google và hiện tại được duy trì bởi Cloud Native Computing Foundation (CNCF), Kubernetes cung cấp một nền tảng để điều hành các containerized applications trong một cluster of nodes. Các thành phần chính của Kubernetes bao gồm:
+**Kubernetes**, often referred to as K8s, is an open-source system for automating the deployment, scaling, and management of containerized applications. Developed by Google and now maintained by the Cloud Native Computing Foundation (CNCF), Kubernetes provides a platform to operate containerized applications in a cluster of nodes. The main components of Kubernetes include:
 
-- Cluster: Một tập hợp các máy (node) chạy các ứng dụng container.
-- Nodes: Các máy trong cluster, có thể là máy vật lý hoặc ảo, nơi các container chạy.
-- Pods: Nhóm nhỏ nhất của Kubernetes, một Pod có thể chứa một hoặc nhiều container.
-- Services: Định nghĩa cách tiếp cận để truy cập đến một nhóm các Pod.
-- Ingress: Quản lý truy cập bên ngoài vào các service trong cluster, thường thông qua HTTP và HTTPS.
+- Cluster: A set of machines (nodes) running containerized applications.
+- Nodes: The machines in the cluster, which can be physical or virtual, where containers run.
+- Pods: The smallest unit in Kubernetes, a Pod can contain one or more containers.
+- Services: Define how to access a group of Pods.
+- Ingress: Manages external access to services in the cluster, typically via HTTP and HTTPS.
 
 <div align="center">
   <img width="600" src="./assets/images/k8s-1.png" alt="gitflow">
@@ -21,16 +21,16 @@
 </div>
 <br>
 
-**Kubectl** là công cụ dòng lệnh để giao tiếp với Kubernetes. Nó cho phép thực hiện các thao tác như deploy ứng dụng, quản lý tài nguyên, kiểm tra logs,... Một số lệnh phổ biến của kubectl bao gồm:
+**Kubectl** is the command-line tool for interacting with Kubernetes. It allows you to perform operations such as deploying applications, managing resources, checking logs, etc. Some common kubectl commands include:
 
-`kubectl apply -f <file.yaml>`: Áp dụng cấu hình từ tệp YAML.
-`kubectl get <resource>`: Liệt kê các tài nguyên (pods, services, deployments, etc.).
-`kubectl describe <resource> <name>`: Hiển thị chi tiết về một tài nguyên cụ thể.
-`kubectl logs <pod>`: Xem logs của một Pod.
+`kubectl apply -f <file.yaml>`: Apply configuration from a YAML file.
+`kubectl get <resource>`: List resources (pods, services, deployments, etc.).
+`kubectl describe <resource> <name>`: Show details about a specific resource.
+`kubectl logs <pod>`: View logs of a Pod.
 
-**Kubelet** là một agent chạy trên mỗi node trong cluster và chịu trách nhiệm cho các Pod được phân công đến node đó. Nó đảm bảo rằng các containers trong một Pod đang chạy. Kubelet nhận các chỉ dẫn từ API server và thực hiện chúng, quản lý vòng đời của các container thông qua container runtime như Docker hoặc containerd.
+**Kubelet** is an agent that runs on each node in the cluster and is responsible for the Pods assigned to that node. It ensures that the containers in a Pod are running. Kubelet receives instructions from the API server and executes them, managing the lifecycle of containers through container runtimes like Docker or containerd.
 
-**Kubespray** là một dự án mã nguồn mở cung cấp Ansible playbooks để triển khai một cluster Kubernetes. Được thiết kế để dễ dàng và linh hoạt, Kubespray hỗ trợ nhiều loại hệ điều hành và môi trường cloud khác nhau. Nó cung cấp các tính năng như:
+**Kubespray** is an open-source project that provides Ansible playbooks to deploy a Kubernetes cluster. Designed to be easy and flexible, Kubespray supports various operating systems and cloud environments. It offers features such as:
 
 - Multi-node deployment.
 - High availability.
@@ -39,9 +39,9 @@
 
 ## 2. Output
 
-### 2.1 Chuẩn bị tài nguyên
+### 2.1 Resource Preparation
 
-Các tài nguyên từ bài giữa kỳ đã triển khai
+Resources from the midterm project have been deployed
 
 - Server 1: **_CI/CD QA server (cicd-qa-server)_**: Memory: 3 GB, Processors: 1 – IP: `192.168.64.140`
   - Port `8080` - Jenkins server
@@ -51,39 +51,39 @@ Các tài nguyên từ bài giữa kỳ đã triển khai
 - Server 4: **_Database server (database-server)_**: Memory: 1 GB, Processors: 1, Disk: 20 GB – IP: `192.168.64.143`
 - Server 5: **_App server 2 (app-server-2)_**: Memory: 1 GB, Processors: 1 – IP: `192.168.64.144`
 - Server 6: **_Load balancing server (lb-server)_**: Memory: 1 GB, Processors: 1 – IP: `192.168.64.145`
-- Server 7: Docker registry: sử dụng **_Docker Hub_**
+- Server 7: Docker registry: using **_Docker Hub_**
 
-Để triển khai K8s trong bài này cần chuẩn bị thêm các tài nguyên:
+To deploy K8s in this project, additional resources are needed:
 
 - Server 8: **_k8s master server (k8s-master-server)_**: Memory: 2 GB, Processors: 1 – IP: `192.168.64.148`
 - Server 9: **_k8s worker server (k8s-worker-server)_**: Memory: 2 GB, Processors: 2 – IP: `192.168.64.149`
 
-### 2.2 Cài đặt k8s qua Kubespray
+### 2.2 Installing k8s via Kubespray
 
-Trong phần này sẽ triển khai Kubernetes thông qua công cụ kubespray lên 1 master node VM + 1 worker node VM
+In this section, Kubernetes will be deployed using the kubespray tool on 1 master node VM + 1 worker node VM.
 
-Ý tưởng là sẽ cài kubespray một lên máy chủ (Installation Server) trong bài lab này chọn node `cicd-qa-server` và cần cho Kubespray biết cần phải cài một cụm K8S với bao nhiêu node master, bao nhiêu worker, cài etcd trên bao nhiêu node, thông tin kết nối của các node là gì.
+The idea is to install kubespray on a server (Installation Server), in this lab, the node `cicd-qa-server` is chosen, and kubespray needs to know how many master nodes, worker nodes, and etcd nodes to install, and the connection information of these nodes.
 
-Clone Kubespray từ github về
+Clone Kubespray from GitHub
 `git clone https://github.com/kubernetes-sigs/kubespray.git --branch release-2.16`
 
-Tạo một inventory mới từ bộ mẫu của kubespray
+Create a new inventory from the kubespray sample
 `cp -rf inventory/sample inventory/vdt-final-cluster`
 
-Cấu hình file inventory. Trong thẻ [all] là nơi khai báo thông tin chi tiết của tất cả các node gồm tên và IP. [kube-master] là các node sẽ chạy với role master, [kube-node] là các node chạy role worker, [etcd] là các node sẽ chạy etcd, thường chọn là các node master luôn.
+Configure the inventory file. In the [all] section, declare detailed information of all nodes including names and IPs. [kube-master] are the nodes that will run with the master role, [kube-node] are the nodes running the worker role, [etcd] are the nodes that will run etcd, usually chosen as the master nodes.
 
 <div align="center">
   <img width="1000" src="./assets/images/kubespray-2.png" alt="">
 </div>
 <br>
 
-Tiếp đến nếu muốn đổi CNI (network plugin của K8S) thì sửa file config sau:
+Next, if you want to change the CNI (network plugin of K8S), edit the following config file:
 `inventory/vdt-final-cluster/group_vars/k8s_cluster/k8s-cluster.yml`
-sửa tham số `kube_network_plugin` từ `calino` về `flannel`(chi tiết về 2 plugin mạng này xem [tại đây](https://www.suse.com/c/rancher_blog/comparing-kubernetes-cni-providers-flannel-calico-canal-and-weave/))
+change the parameter `kube_network_plugin` from `calico` to `flannel` (details about these two network plugins can be found [here](https://www.suse.com/c/rancher_blog/comparing-kubernetes-cni-providers-flannel-calico-canal-and-weave/))
 
-Do dùng Kubespray dùng Ansible nên cần tạo ssh key và đẩy lên 2 con `k8s-master-server` và `k8s-worker-server`
+Since Kubespray uses Ansible, create an ssh key and push it to the two nodes `k8s-master-server` and `k8s-worker-server`.
 
-Chạy Kubespray từ container để sau đó thực hiện cài đặt cluster k8s trong này
+Run Kubespray from a container to install the k8s cluster
 `docker run -it --mount type=bind,source=/home/app-installed/kubespray/inventory/vdt-final-cluster,dst=/inventory/vdt-final quay.io/kubespray/kubespray:v2.16.0 bash`
 
 <div align="center">
@@ -91,8 +91,8 @@ Chạy Kubespray từ container để sau đó thực hiện cài đặt cluster
 </div>
 <br>
 
-Giờ cài k8s qua Ansible
-`ansible-playbook -i /inventory/vdt-final/iventory.ini cluster.yml --user=sysadmin --ask-pass --become --ask-become-pass`
+Now install k8s via Ansible
+`ansible-playbook -i /inventory/vdt-final/inventory.ini cluster.yml --user=sysadmin --ask-pass --become --ask-become-pass`
 
 <div align="center">
   <img width="1000" src="./assets/images/kubespray-4.png" alt="">
@@ -103,9 +103,9 @@ Giờ cài k8s qua Ansible
 </div>
 <br>
 
-### 2.3 Cài đặt và cấu hình kubectl
+### 2.3 Installing and Configuring kubectl
 
-**Cấu hình kubectl lên master**
+**Configure kubectl on the master**
 
 ```shell
 mkdir -p $HOME/.kube
@@ -113,15 +113,15 @@ sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-Chạy `kubectl get nodes -o wide` để lấy các nodes ra
+Run `kubectl get nodes -o wide` to list the nodes
 
 <div align="center"> 
   <img width="1000" src="./assets/images/k8s-2.png" alt="">
 </div>
 <br>
 
-**Cấu hình kubectl lên `cicd-qa-server`**
-Cài kubectl lên server này
+**Configure kubectl on `cicd-qa-server`**
+Install kubectl on this server
 
 ```shell
 curl -LO https://dl.k8s.io/release/v1.20.7/bin/linux/amd64/kubectl
@@ -134,7 +134,7 @@ kubectl version --client
 </div>
 <br>
 
-Cấu hình kubectl để kết nối tới cụm K8S:
+Configure kubectl to connect to the K8S cluster:
 
 ```shell
 mkdir -p $HOME/.kube
@@ -144,13 +144,13 @@ chown $(id -u):$(id -g) $HOME/.kube/config
 
 <br>
 
-Sửa file config, tham số "server: https://127.0.0.1:6443" thành "server: https://192.168.64.148:6443" và lưu lại (`192.168.64.148` là IP của node master, 6443 là port mặc định của kube-api-server)
+Edit the config file, change the parameter "server: https://127.0.0.1:6443" to "server: https://192.168.64.148:6443" and save it (`192.168.64.148` is the IP of the master node, 6443 is the default port of the kube-api-server)
 
 <div align="center"> 
   <img width="1000" src="./assets/images/k8s-4.png" alt="">
 </div>
 <br>
-Rồi get nodes ra 
+Then get the nodes 
 <div align="center"> 
   <img width="1000" src="./assets/images/k8s-5.png" alt="">
 </div>

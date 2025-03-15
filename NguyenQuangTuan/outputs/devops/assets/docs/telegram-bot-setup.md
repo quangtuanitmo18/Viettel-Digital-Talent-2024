@@ -1,35 +1,35 @@
-## Tích hợp gửi thông báo Pipeline CI/CD đến Telegram
+## Integrate sending CI/CD Pipeline notifications to Telegram
 
-Tìm kiếm botfather trên Telegram
+Search for botfather on Telegram
 
 <div align="center">
   <img width="600" src="../images/telegram-bot-1.png" alt="Telegram bot">
 </div>
 <br>
 
-Thực hiện các bước theo chỉ dẫn của `BotFather` để tạo bot mới, chọn `name` và `username` cho bot
+Follow the steps guided by `BotFather` to create a new bot, choose a `name` and `username` for the bot
 
 - `name`: `Pipeline notification`
 - `username`: `pipeline_check_bot`
 
-Sau khi thành công sẽ có:
+After successful creation, you will have:
 
-- Link để chuyển tới cuộc hội thoại của bot
-- Token hãy lưu lại để sau sử dụng trong pipline CI/CD
+- A link to the bot conversation
+- A token, save it for later use in the CI/CD pipeline
 
 <div align="center">
   <img width="600" src="../images/telegram-bot-2.png" alt="Telegram bot">
 </div>
 <br>
 
-Chuyển đến con bot mới tạo ấn `Start` và chat 1 nội dung bất kì nào đó
+Go to the newly created bot, press `Start`, and send any message
 
 <div align="center">
   <img width="600" src="../images/telegram-bot-3.png" alt="Telegram bot">
 </div>
 <br>
 
-Truy cập vào link: `https://api.telegram.org/bot<Token>/getUpdates` và lưu lại Chat ID để sử dụng cho pipeline CI/CD
+Access the link: `https://api.telegram.org/bot<Token>/getUpdates` and save the Chat ID for use in the CI/CD pipeline
 
 <div align="center">
   <img width="600" src="../images/telegram-bot-4.png" alt="Telegram bot">

@@ -1,77 +1,78 @@
-# Bài tập lớn giữa kỳ chương trình VDT 2024 lĩnh vực Cloud
+# Midterm Project for the VDT 2024 Cloud Program
 
-## Phát triển một 3-tier web application đơn giản (3đ)
+## Develop a Simple 3-tier Web Application (3 Points)
 
-Yêu cầu:
+**Requirements:**
 
-- Phát triển web application có các chức năng sau (0.5đ):
+- Develop a web application with the following functionalities (0.5 Points):
 
-  - Hiển thị danh sách sinh viên tham gia chương trình VDT2024 dưới dạng bảng với các thông tin sau: Họ và tên, Giới tính, trường đang theo học.
-  - Cho phép xem chi tiết/thêm/xóa/cập nhật thông tin sinh viên.
+  - Display a list of students participating in the VDT2024 program in a table with the following details: Full Name, Gender, School.
+  - Allow viewing details, adding, deleting, and updating student information.
 
-- Thiết kế hệ thống với ba dịch vụ (1đ):
-  - <b>web</b>: Giao diện web, tuỳ chọn ngôn ngữ, framework.
-  - <b>api</b>: RESTful API viết bằng ngôn ngữ lập trình tùy chọn, có đầy đủ các chức năng: list, get, create, update, delete.
-  - <b>db</b>: Database SQL hoặc NoSQL lưu trữ thông tin sinh viên.
-- Viết unit tests cho các chức năng APIs, mỗi API tối thiếu 1 testcase (0.5đ).
-- Maintain source code của api và web ở 2 repo khác nhau, mỗi feature là 1 Pull Request (1đ).
+- Design the system with three services (1 Point):
+  - **web**: Frontend interface; language and framework of your choice.
+  - **api**: RESTful API written in a programming language of your choice, featuring the following functions: list, get, create, update, delete.
+  - **db**: SQL or NoSQL database to store student information.
+- Write unit tests for the API functionalities, ensuring at least one testcase per API (0.5 Points).
 
-Output:
+- Maintain the source code of the API and web services in two separate repositories, with each feature submitted as a Pull Request (1 Point).
 
-- Hình ảnh thể hiện kết quả đã đạt được
-- Mã nguồn của từng dịch vụ (link github)
+**Output:**
 
-<b>Output</b>: [Output 3-tier web application](./outputs/3-tier-web/README.md)
+- Screenshots showing the achieved results.
+- Source code for each service (GitHub link).
 
-## Triển khai web application sử dụng các DevOps tools & practices (5đ)
+**Output:** [Output 3-tier web application](./outputs/3-tier-web/README.md)
 
-#### 1. Containerization (2đ)
+## Deploy the Web Application Using DevOps Tools & Practices (5 Points)
 
-Yêu cầu:
+#### 1. Containerization (2 Points)
 
-- Viết Dockerfile để ở từng repo để đóng gói các dịch vụ trên thành các container image (1đ)
-- Yêu cầu image đảm bảo tối ưu thời gian build và kích thước chiếm dụng, khuyến khích sử dụng các thủ thuật build image đã được giới thiệu (layer-caching, optimized RUN instructions, multi-stage build, etc.) (1đ)
+**Requirements:**
 
-Output:
+- Write a Dockerfile in each repository to package the services into container images (1 Point).
+- Ensure that the images are optimized for build time and size, leveraging techniques such as layer-caching, optimized RUN instructions, multi-stage builds, etc. (1 Point).
 
-- File Dockerfile cho từng dịch vụ
-- Output câu lệnh build và thông tin docker history của từng image
+**Output:**
 
-#### 2. Continuous Integration (1.5đ)
+- Dockerfile for each service.
+- Output of the build commands and docker history information for each image.
 
-Yêu cầu:
+#### 2. Continuous Integration (1.5 Points)
 
-- Tự động chạy unit test khi tạo PR vào branch main (0.5đ)
-- Tự động chạy unit test khi push commit lên một branch (1đ)
+**Requirements:**
 
-Output:
+- Automatically run unit tests when a Pull Request is created targeting the main branch (0.5 Points).
+- Automatically run unit tests when commits are pushed to any branch (1 Point).
 
-- File setup công cụ CI
-- Output log của luồng CI
-- Các hình ảnh demo khác
+**Output:**
 
-#### 3. Automation (1.5đ)
+- CI tool setup file.
+- Output log of the CI pipeline.
+- Other demo screenshots.
 
-Yêu cầu:
+#### 3. Automation (1.5 Points)
 
-- Viết ansible playbooks để triển khai các image docker của các dịch vụ web, api, db, mỗi dịch vụ 1 role (0.5đ).
-- Trong từng role cho phép tuỳ biến cấu hình của các dịch vụ thông qua các variables (0.5đ).
-- Cho phép triển khai các dịch vụ trên các host khác nhau thông qua file inventory (0.5đ).
+**Requirements:**
 
-Output:
+- Write Ansible playbooks to deploy the Docker images for the web, api, and db services, with each service configured as a separate role (0.5 Point).
+- Allow configuration customization for each service via variables in each role (0.5 Point).
+- Enable deployment of services on different hosts using an inventory file (0.5 Point).
 
-- Link github source code của ansible playbooks
+**Output:**
 
-<b>Output</b>: [Output triển khai web application sử dụng các DevOps tools & practices ](./outputs/devops/README.md)
+- GitHub source code link for the Ansible playbooks.
 
-## Nghiên cứu sâu về một vấn đề, khái niệm trong các chủ đề đã được học (2đ)
+**Output:** [Deploy web application using DevOps tools & practices](./outputs/devops/README.md)
 
-Yêu cầu:
+## In-depth Research on a Topic or Concept from the Studied Subjects (2 Points)
 
-- Viết bất gì về bất cứ gì trong các chủ đề đã được học
+**Requirements:**
 
-Output:
+- Write about any topic related to the subjects studied.
 
-- File báo cáo trong PR lên repo chung
+**Output:**
 
-<b>Output</b>: [DevSecOps](./outputs/research-topic/README.md)
+- A report file included in the Pull Request to the common repository.
+
+**Output:** [DevSecOps](./outputs/research-topic/README.md)

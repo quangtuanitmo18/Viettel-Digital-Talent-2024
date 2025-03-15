@@ -1,18 +1,18 @@
 # K8S Helm Chart
 
-## 1. Mô tả
+## 1. Description
 
-### 1.1 Helm và Helm-chart
+### 1.1 Helm and Helm-chart
 
-**Helm** là một công cụ quản lý package dành cho Kubernetes, được thiết kế để giúp người dùng dễ dàng triển khai, quản lý và chia sẻ các ứng dụng Kubernetes. Tương tự như các trình quản lý package khác như apt cho Debian/Ubuntu hoặc yum cho RedHat/CentOS, Helm giúp bạn cài đặt và cập nhật các ứng dụng trên Kubernetes một cách dễ dàng và nhất quán.
+**Helm** is a package manager for Kubernetes, designed to help users easily deploy, manage, and share Kubernetes applications. Similar to other package managers like apt for Debian/Ubuntu or yum for RedHat/CentOS, Helm helps you install and update applications on Kubernetes easily and consistently.
 
-**Helm Chart** là một tập hợp các file được tổ chức theo cấu trúc thư mục xác định, chứa tất cả thông tin cần thiết để triển khai một ứng dụng hoặc dịch vụ trên Kubernetes. Một Chart bao gồm:
+**Helm Chart** is a collection of files organized in a specific directory structure, containing all the information needed to deploy an application or service on Kubernetes. A Chart includes:
 
-- `Templates`: Các file mẫu YAML định nghĩa các tài nguyên Kubernetes như Pod, Service, Deployment, v.v. Các file này có thể sử dụng các biến để tạo ra cấu hình linh hoạt.
-- `Values`: Các file YAML chứa các giá trị mặc định cho các biến trong templates. Bạn có thể cung cấp các giá trị riêng khi triển khai Chart để tùy chỉnh cấu hình.
-- `Chart.yaml`: File metadata chứa thông tin về Chart như tên, phiên bản, mô tả, và các thông tin liên quan khác.
-- `Charts`: Thư mục chứa các Chart phụ thuộc (dependencies).
-- `README.md`: File mô tả chi tiết về Chart, cách sử dụng và các tùy chọn cấu hình.
+- `Templates`: YAML template files defining Kubernetes resources such as Pod, Service, Deployment, etc. These files can use variables to create flexible configurations.
+- `Values`: YAML files containing default values for variables in the templates. You can provide custom values when deploying the Chart to customize the configuration.
+- `Chart.yaml`: Metadata file containing information about the Chart such as name, version, description, and other related information.
+- `Charts`: Directory containing dependent Charts.
+- `README.md`: File describing the Chart in detail, how to use it, and configuration options.
 
 <div align="center">
   <img width="1000" src="./assets/images/helm-chart-1.png" alt="">
@@ -27,9 +27,9 @@
 
 ### 1.2 ArgoCD
 
-**Argo CD** là một công cụ mã nguồn mở dành cho Continuous Deployment (CD) được xây dựng để triển khai và quản lý các ứng dụng Kubernetes một cách tự động. Nó là một phần của bộ công cụ Argo, được thiết kế đặc biệt để quản lý các ứng dụng Kubernetes bằng cách sử dụng mô hình GitOps.
+**Argo CD** is an open-source tool for Continuous Deployment (CD) built to deploy and manage Kubernetes applications automatically. It is part of the Argo toolset, specifically designed to manage Kubernetes applications using the GitOps model.
 
-**Gitops** GitOps là một phương pháp triển khai ứng dụng và quản lý cơ sở hạ tầng bằng cách sử dụng Git. Trong mô hình GitOps, các cấu hình và trạng thái mong muốn của hệ thống được lưu trữ trong các kho lưu trữ Git. Các thay đổi được thực hiện thông qua việc cập nhật các kho lưu trữ này, và sau đó các công cụ tự động hóa như Argo CD sẽ áp dụng các thay đổi đó lên môi trường Kubernetes.
+**GitOps** is a method of deploying applications and managing infrastructure using Git. In the GitOps model, the desired configurations and states of the system are stored in Git repositories. Changes are made by updating these repositories, and then automation tools like Argo CD apply those changes to the Kubernetes environment.
 
 <div align="center">
   <img width="1000" src="./assets/images/arrgocd-1.png" alt="">
@@ -37,7 +37,7 @@
 
 ## 2. Output
 
-Các tài nguyên từ bài giữa kỳ đã triển khai
+Resources from the midterm project have been deployed
 
 - Server 1: **_CI/CD QA server (cicd-qa-server)_**: Memory: 3 GB, Processors: 1 – IP: `192.168.64.140`
   - Port `8080` - Jenkins server
@@ -47,74 +47,74 @@ Các tài nguyên từ bài giữa kỳ đã triển khai
 - Server 4: **_Database server (database-server)_**: Memory: 1 GB, Processors: 1 – IP: `192.168.64.143`
 - Server 5: **_App server 2 (app-server-2)_**: Memory: 1 GB, Processors: 1 – IP: `192.168.64.144`
 - Server 6: **_Load balancing server (lb-server)_**: Memory: 1 GB, Processors: 1 – IP: `192.168.64.145`
-- Server 7: Docker registry: sử dụng **_Docker Hub_**
+- Server 7: Docker registry: using **_Docker Hub_**
 
-Trong bài cuối kỳ chuẩn bị thêm các tài nguyên:
+Additional resources prepared for the final project:
 
 - Server 8: **_k8s master server (k8s-master-server)_**: Memory: 2 GB, Processors: 1 – IP: `192.168.64.148`
 - Server 9: **_k8s worker server (k8s-worker-server)_**: Memory: 2 GB, Processors: 2 – IP: `192.168.64.149`
 
 <br>
 
-**_Trước tiên_** cần cài Storage cho K8s dùng NFS để sau này lưu dữ liệu của DB lên đó (Link tài liệu cài đặt [link1](https://rudimartinsen.com/2024/01/09/nfs-csi-driver-kubernetes/), [link2](https://viblo.asia/p/k8s-phan-3-cai-dat-storage-cho-k8s-dung-nfs-RnB5pAw7KPG))
+**_First_** install Storage for K8s using NFS to later store DB data on it (Installation guide links [link1](https://rudimartinsen.com/2024/01/09/nfs-csi-driver-kubernetes/), [link2](https://viblo.asia/p/k8s-phan-3-cai-dat-storage-cho-k8s-dung-nfs-RnB5pAw7KPG))
 
-Tìm hiều thêm về Volume, PersistentVolume, PersistentVolumeClaim, StorageClass, Provisioner trên k8s [tại đây](https://viblo.asia/p/k8s-basic-kubernetes-storage-qPoL7X6mVvk)
+Learn more about Volume, PersistentVolume, PersistentVolumeClaim, StorageClass, Provisioner on k8s [here](https://viblo.asia/p/k8s-basic-kubernetes-storage-qPoL7X6mVvk)
 
-Về reclaim policy có 2 loại là delete và retain, đó là cấu hình chính sách xử lý các phân vùng lưu trữ khi xóa PVC.
+Regarding reclaim policy, there are two types: delete and retain, which are configurations for handling storage partitions when deleting PVC.
 
-- `delete`: Khi xóa một Persistent Volume Claim (PVC) trên K8S thì hệ thống cũng tự động xóa Persistent Volume (PV) tương ứng và đồng thời hỗ trợ xóa luôn phân vùng lưu trên thiết bị lưu trữ mà gán với PV đó
-- `retain`: Khi xóa PVC trên K8S thì phân vùng lữu trữ trên thiết bị lưu trữ sẽ không tự động bị xóa đi.
+- `delete`: When deleting a Persistent Volume Claim (PVC) on K8S, the system also automatically deletes the corresponding Persistent Volume (PV) and supports deleting the storage partition associated with that PV.
+- `retain`: When deleting PVC on K8S, the storage partition on the storage device will not be automatically deleted.
 
-Trong bài lab này cài NFS-server lên `database-server: 192.168.64.143`, cài đặt NFS-client lên worker node `k8s-worker-server: 192.168.64.148` và cài đặt NFS storage class lên cluster (tại phần cài k8s đã cài kubectl lên server `cicd-qa-server: 192.168.64.140` và cấu hình tới cluster rồi cho nên từ giờ mọi cài đặt lên cluster sẽ được thực hiện qua server này)
+In this lab, install NFS-server on `database-server: 192.168.64.143`, install NFS-client on worker node `k8s-worker-server: 192.168.64.148`, and install NFS storage class on the cluster (at the k8s installation step, kubectl was installed on the server `cicd-qa-server: 192.168.64.140` and configured to the cluster, so from now on all installations on the cluster will be done through this server).
 
-Trong bài cài 3 pod với reclaim policy là `retain`
+In this lab, install 3 pods with reclaim policy set to `retain`.
 
 ### 2.1 Helm-chart
 
 #### Database
 
-**Database được expose qua service ClusterIP**
+**Database is exposed via ClusterIP service**
 
-Đầu tiên dựng DB lên trước bằng helm, chi tiết các file xem tại [VDT-config-helm-db](https://github.com/quangtuanitmo18/VDT-config-helm-db)
+First, set up the DB using helm, detailed files can be found at [VDT-config-helm-db](https://github.com/quangtuanitmo18/VDT-config-helm-db)
 
-Lần lượt apply config, env, headless service, statesulset và service của Database lên cluster
+Sequentially apply config, env, headless service, statefulset, and service of the Database to the cluster.
 
 <div align="center">
   <img width="1000" src="./assets/images/helm-db-2.png" alt="">
 </div>
 <br>
 
-Mỗi Pod đều được gán 1 PVC riêng
-Trong bài lab này PVC triển khai theo reclaim policy là `retain`
+Each Pod is assigned its own PVC
+In this lab, PVC is deployed with the reclaim policy set to `retain`
 
 <div align="center">
   <img width="1000" src="./assets/images/helm-db-3.png" alt="">
 </div>
 <br>
 
-Qua NFS-server `database-server: 192.168.64.143` check thì đã thấy các PV được tạo
+Checking on the NFS-server `database-server: 192.168.64.143`, the PVs have been created
 
 <div align="center">
   <img width="1000" src="./assets/images/helm-db-4.png" alt="">
 </div>
 <br>
 
-Các Pod của Statefulset không thể được tạo hay xóa cùng lúc. Nó sẽ được tạo tuần tự và cần triển khai database theo `statefulset` chứ không phải `deployment` do data cần triển khai theo dạng relication
+Pods of a Statefulset cannot be created or deleted simultaneously. They are created sequentially, and the database needs to be deployed as a `statefulset` rather than a `deployment` because the data needs to be deployed in a replication manner.
 
 <div align="center">
   <img width="1000" src="./assets/images/data-replication-1.png" alt="">
 </div>
 <br>
 
-Khi đó pod có cả quyền read/write sẽ được gọi là `Primary` (vdt-db-0) còn pod còn quyền read thôi sẽ được gọi là `Secondary` (vdt-db-1, vdt-db-2), Ngày xưa thuật ngữ này được gọi là `Master-Slave`
+In this case, the pod with both read/write permissions is called `Primary` (vdt-db-0), while the pods with read-only permissions are called `Secondary` (vdt-db-1, vdt-db-2). Previously, these terms were known as `Master-Slave`.
 
 <div align="center">
   <img width="1000" src="./assets/images/data-replication-2.png" alt="">
 </div>
-với Statefulset là các Pod của nó không sử dụng chung phần lưu trữ. Mỗi Pod sẽ có phân vùng lưu trữ khác nhau dù dữ liệu chúng lưu trữ là như nhau (cùng được replicate từ bản chính ra). Mỗi Pod sẽ có phân vùng lưu trữ riêng của nó để lưu trữ dữ liệu. Dữ liệu của mỗi Pod được liên tục đồng bộ để đảm bảo dữ liệu lưu trên mỗi Pod là luôn giống hệt nhau.
+With Statefulset, its Pods do not share storage. Each Pod has a different storage partition, even though the data they store is the same (replicated from the primary). Each Pod has its own storage partition to store data. The data of each Pod is continuously synchronized to ensure that the data stored on each Pod is always identical.
 
-Sau khi thực hiện các bước trên đã dựng được Database stateful lên rồi, tuy nhiên việc sao chép và đồng bộ dữ liệu cần thực hiện thêm 1 bước initiate
-`vdt-db-0.vdt-db.vdt-final.svc.cluster.local:27017` là link để kết nối tới Database trong cluster (`Pod Name.Service Name.Namespace.Domain(svc.cluster.local).Port`)
+After performing the above steps, the Database stateful has been set up, but data replication and synchronization require an additional initiation step.
+`vdt-db-0.vdt-db.vdt-final.svc.cluster.local:27017` is the link to connect to the Database within the cluster (`Pod Name.Service Name.Namespace.Domain(svc.cluster.local).Port`)
 
 ```shell
 rs.initiate({
@@ -134,32 +134,32 @@ rs.initiate({
 
 #### API
 
-**API được expose qua service NodePort**
+**API is exposed via NodePort service**
 
-Triển khai Api bằng deployment, chi tiết helm-chart để tại thư mục `helm` trong repo `VDT-midterm-api` [tại đây](https://github.com/quangtuanitmo18/VDT-midterm-api/tree/main/helm).
+Deploy the API using deployment, detailed helm-chart is located in the `helm` folder in the `VDT-midterm-api` repo [here](https://github.com/quangtuanitmo18/VDT-midterm-api/tree/main/helm).
 
-File `values.yaml` để sang 1 repo config [VDT-config-helm-api](https://github.com/quangtuanitmo18/VDT-config-helm-api)
+The `values.yaml` file is placed in a config repo [VDT-config-helm-api](https://github.com/quangtuanitmo18/VDT-config-helm-api)
 
 #### WEB
 
-**WEB được expose qua service NodePort**
+**WEB is exposed via NodePort service**
 
-Triển khai Web bằng deployment, chi tiết helm-chart để tại thư mục `helm` trong repo `VDT-midterm-web` [tại đây](https://github.com/quangtuanitmo18/VDT-midterm-web/tree/main/helm).
+Deploy the Web using deployment, detailed helm-chart is located in the `helm` folder in the `VDT-midterm-web` repo [here](https://github.com/quangtuanitmo18/VDT-midterm-web/tree/main/helm).
 
-File `values.yaml` để sang 1 repo config [VDT-config-helm-api](https://github.com/quangtuanitmo18/VDT-config-helm-web)
+The `values.yaml` file is placed in a config repo [VDT-config-helm-web](https://github.com/quangtuanitmo18/VDT-config-helm-web)
 
 ### 2.1 ArgoCD
 
-#### Cài đặt
+#### Installation
 
-Cài ArgoCD bằng lệnh sau
+Install ArgoCD using the following commands
 
 ```shell
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
-Sau khi đã cài thành công cần cấu hình service thành NortPort để truy cập được từ bên ngoài (ở đây là port 32538)
+After successful installation, configure the service to NodePort to access it from outside (here it is port 32538)
 `kubectl patch svc -n argocd argocd-server --patch '{"spec": {"type": "NodePort"}}'`
 
 <div align="center">
@@ -167,7 +167,7 @@ Sau khi đã cài thành công cần cấu hình service thành NortPort để t
 </div>
 <br>
 
-Lấy mật khẩu của argoCD
+Get the ArgoCD password
 `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
 
 <div align="center">
@@ -178,14 +178,14 @@ Lấy mật khẩu của argoCD
 </div>
 <br>
 
-#### Triển khai các service web và api service lên K8S Cluster bằng multiple sources của ArgoCD
+#### Deploy web and api services to the K8S Cluster using ArgoCD's multiple sources
 
-Thực hiện theo như hướng dẫn [Multiple sources for an application](https://argo-cd.readthedocs.io/en/release-2.7/user-guide/multiple_sources/#helm-value-files-from-external-git-repository)
+Follow the guide [Multiple sources for an application](https://argo-cd.readthedocs.io/en/release-2.7/user-guide/multiple_sources/#helm-value-files-from-external-git-repository)
 
-Triển khai multisource cho một ứng dụng bằng Argo CD là một chiến lược mà trong đó một ứng dụng có thể được định nghĩa bởi nhiều nguồn khác nhau, như các kho lưu trữ Git hoặc các thư mục khác nhau trong một kho lưu trữ. Điều này cho phép một ứng dụng được quản lý, cấu hình và triển khai từ nhiều nguồn một cách linh hoạt và hiệu quả.
-Một vài issues về multiple resources trên ArgoCD ([argoproj-3988](https://github.com/argoproj/argo-cd/issues/3988),[argoproj-6280](https://github.com/argoproj/argo-cd/issues/6280) )
+Deploying multisource for an application using Argo CD is a strategy where an application can be defined by multiple sources, such as different Git repositories or different directories within a repository. This allows an application to be managed, configured, and deployed from multiple sources flexibly and efficiently.
+Some issues about multiple resources on ArgoCD ([argoproj-3988](https://github.com/argoproj/argo-cd/issues/3988),[argoproj-6280](https://github.com/argoproj/argo-cd/issues/6280))
 
-Do bài được phát triển từ bài giữa kỳ (bài giữa kỳ host Gitlab trên local để lưu repositories) nền cần thực hiện tạo 2 repo là `VDT-config-helm-api` và `VDT-config-helm-web` để lưu trữ các file values trên gitlab
+Since the project is developed from the midterm project (the midterm project hosts Gitlab locally to store repositories), it is necessary to create two repos `VDT-config-helm-api` and `VDT-config-helm-web` to store the values files on Gitlab.
 
 <div align="center">
   <img width="1000" src="./assets/images/repo-config-api.png" alt="">
@@ -195,7 +195,7 @@ Do bài được phát triển từ bài giữa kỳ (bài giữa kỳ host Gitl
 </div>
 <br>
 
-File `argocd-vdt-api-app.yaml` và `argocd-vdt-web-app.yaml` cho việc triển khai Api và Web bằng multiple sources. 2 repo `VDT-midterm-api` và `VDT-midterm-web` là 2 repo lưu code trên gitlab từ bài giữa kỳ.
+The `argocd-vdt-api-app.yaml` and `argocd-vdt-web-app.yaml` files for deploying Api and Web using multiple sources. The two repos `VDT-midterm-api` and `VDT-midterm-web` are the two code repos on Gitlab from the midterm project.
 
 ```shell
 #argocd-vdt-api-app.yaml
@@ -247,7 +247,7 @@ spec:
     automated: {}
 ```
 
-Sau khi apply 2 file trên, truy cập vào argoCD được kết quả
+After applying the above two files, access ArgoCD to get the result
 
 <div align="center">
   <img width="1000" src="./assets/images/argocd-6.png" alt="">
@@ -260,13 +260,13 @@ Sau khi apply 2 file trên, truy cập vào argoCD được kết quả
 </div>
 <br>
 
-Check các pod trên k8s
+Check the pods on k8s
 
 <div align="center">
   <img width="1000" src="./assets/images/argocd-9.png" alt="">
 </div>
 
-Hình ảnh truy cập vào web và api từ trình duyệt. Web được expose nodeport `30002` còn api được expose nodeport `30003`
+Images of accessing web and api from the browser. Web is exposed on nodeport `30002` and api is exposed on nodeport `30003`.
 
 <div align="center">
   <img width="1000" src="./assets/images/web-1.png" alt="">

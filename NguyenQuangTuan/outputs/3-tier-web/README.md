@@ -1,8 +1,8 @@
-# Phát triển một 3-tier web application đơn giản
+# Develop a simple 3-tier web application
 
-## 1. Mô tả
+## 1. Description
 
-3-tier web application sử dụng 3 dịch vụ gồm: web, api và database dựa trên MERN (MongoDB, ExpressJs, ReactJs, NodeJs) Stack.
+3-tier web application using 3 services: web, api, and database based on the MERN (MongoDB, ExpressJs, ReactJs, NodeJs) Stack.
 
 <div align="center">
   <img width="600" src="./assets/images/mern.png" alt="gitflow">
@@ -15,7 +15,7 @@
 </div>
 <br>
 
-Maintain source code của api và web ở 2 repo khác nhau, mỗi feature là 1 pull request. Ở cả 2 repo áp dụng git flow thực hiện tạo các nhánh main, release, develop. Khi phát triển 1 feature mới sẽ thực hiện checkout ra và tạo pull request vào nhánh develop. Từ develop sẽ được merge vào release rồi sau đó đến main. Các tag sẽ được tạo từ nhánh main để đánh dấu các phiên bản triển khai.
+Maintain the source code of api and web in 2 different repositories, each feature is a pull request. In both repositories, apply git flow to create main, release, and develop branches. When developing a new feature, checkout and create a pull request to the develop branch. From develop, it will be merged into release and then to main. Tags will be created from the main branch to mark deployment versions.
 
 <div align="center">
   <img width="600" src="./assets/images/gitflow.png" alt="gitflow">
@@ -28,7 +28,7 @@ Maintain source code của api và web ở 2 repo khác nhau, mỗi feature là 
 </div>
 <br>
 
-Các commit gửi lên sẽ được tuân theo 1 convention. Commit convention là một cách tiêu chuẩn hóa việc viết commit message trong quá trình phát triển phần mềm. Nó giúp các thành viên trong nhóm hiểu rõ hơn về nội dung của mỗi commit và dễ dàng theo dõi lịch sử thay đổi của dự án. Trong 2 repo `VDT-midterm-api` và `VDT-midterm-web` sẽ sử dụng Angular Conventional Commit.
+Commits sent up will follow a convention. Commit convention is a standardized way of writing commit messages during software development. It helps team members better understand the content of each commit and easily track the project's change history. In the 2 repositories `VDT-midterm-api` and `VDT-midterm-web`, Angular Conventional Commit will be used.
 
 <div align="center">
   <img width="600" src="./assets/images/conventional-commit.png" alt="Angular Conventional Commit">
@@ -41,11 +41,11 @@ Các commit gửi lên sẽ được tuân theo 1 convention. Commit convention 
 </div>
 <br>
 
-### 1.1 Dịch vụ web
+### 1.1 Web service
 
-Phát triển dịch vụ web sử dụng thư viện [ReactJS](https://react.dev/) viết theo [TypeScript](https://www.typescriptlang.org/) và kết hợp với 1 build tool có module bundler Rollup là [ViteJs](https://vitejs.dev/).
+Develop the web service using the [ReactJS](https://react.dev/) library written in [TypeScript](https://www.typescriptlang.org/) and combined with a build tool with module bundler Rollup, which is [ViteJs](https://vitejs.dev/).
 
-ReactJS là một thư viện JavaScript phổ biến để xây dựng giao diện người dùng. Vite là một công cụ build nhanh chóng và hiện đại, giúp tăng tốc quá trình phát triển bằng cách cung cấp một môi trường phát triển nhanh và một hệ thống build hiệu quả. TypeScript là một phần mở rộng của JavaScript, cung cấp tính năng kiểm tra kiểu tĩnh và các công cụ hỗ trợ phát triển mạnh mẽ. Kết hợp ReactJS, Vite và TypeScript giúp cải thiện hiệu suất phát triển và chất lượng mã nguồn.
+ReactJS is a popular JavaScript library for building user interfaces. Vite is a fast and modern build tool that speeds up development by providing a fast development environment and an efficient build system. TypeScript is an extension of JavaScript that provides static type checking and powerful development tools. Combining ReactJS, Vite, and TypeScript helps improve development performance and code quality.
 
 <div align="center">
   <img width="600" src="./assets/images/reactjs-vite-typescript.png" alt="ReactJs + Vite + TypeScript">
@@ -55,11 +55,11 @@ ReactJS là một thư viện JavaScript phổ biến để xây dựng giao di�
   <i> ReactJs + Vite + TypeScript</i>
 </div>
 
-### 1.2 Dịch vụ api
+### 1.2 Api service
 
-Phát triển dịch vụ api sử dụng framework [ExpressJs](https://expressjs.com/) của Nodejs viết theo TypeScipt.
+Develop the api service using the [ExpressJs](https://expressjs.com/) framework of Nodejs written in TypeScript.
 
-Express.js là một framework web phổ biến cho Node.js, cho phép tạo ra các ứng dụng web và API một cách nhanh chóng và dễ dàng. TypeScript là một phần mở rộng của JavaScript, cung cấp tính năng kiểm tra kiểu tĩnh và các công cụ hỗ trợ phát triển mạnh mẽ. Việc sử dụng TypeScript với Express.js giúp cải thiện chất lượng mã nguồn và khả năng bảo trì của dự án.
+Express.js is a popular web framework for Node.js, allowing for quick and easy creation of web applications and APIs. TypeScript is an extension of JavaScript that provides static type checking and powerful development tools. Using TypeScript with Express.js helps improve code quality and project maintainability.
 
 <div align="center">
   <img width="600" src="./assets/images/nodejs-expressjs-typescript.png" alt="Nodejs + ExpressJs + TypeScript">
@@ -69,11 +69,11 @@ Express.js là một framework web phổ biến cho Node.js, cho phép tạo ra 
   <i>Nodejs + ExpressJs + TypeScript</i>
 </div>
 
-### 1.3 Dịch vụ database
+### 1.3 Database service
 
-Phát triển dịch vụ database dựa trên cơ sở dữ liệu MongoDB.
+Develop the database service based on the MongoDB database.
 
-MongoDB là một cơ sở dữ liệu NoSQL mã nguồn mở, cho phép lưu trữ và truy vấn dữ liệu dưới dạng tài liệu (document) JSON linh hoạt. Được thiết kế để mở rộng và hỗ trợ tính linh hoạt trong việc lưu trữ dữ liệu phi cấu trúc, MongoDB là một lựa chọn phổ biến cho các ứng dụng web nhanh chóng và hiện đại.
+MongoDB is an open-source NoSQL database that allows for flexible JSON document storage and querying. Designed for scalability and flexibility in storing unstructured data, MongoDB is a popular choice for fast and modern web applications.
 
 <div align="center">
   <img width="600" src="./assets/images/mongodb.png" alt="Mongodb">
@@ -84,7 +84,7 @@ MongoDB là một cơ sở dữ liệu NoSQL mã nguồn mở, cho phép lưu tr
 
 ## 2. Output
 
-- <b>Repo api</b>: [VDT-midterm-api](https://github.com/quangtuanitmo18/VDT-midterm-api)
+- <b>Api repository</b>: [VDT-midterm-api](https://github.com/quangtuanitmo18/VDT-midterm-api)
 
   - Pull requests:
     - [Feature/api-crud-users](https://github.com/quangtuanitmo18/VDT-midterm-api/pull/1)
@@ -92,7 +92,7 @@ MongoDB là một cơ sở dữ liệu NoSQL mã nguồn mở, cho phép lưu tr
     - [Feature/test-api-crud-users](https://github.com/quangtuanitmo18/VDT-midterm-api/pull/3)
     - [Feature/pipeline-ci-cd](https://github.com/quangtuanitmo18/VDT-midterm-api/pull/4)
 
-- <b>Repo web</b>: [VDT-midterm-web](https://github.com/quangtuanitmo18/VDT-midterm-web)
+- <b>Web repository</b>: [VDT-midterm-web](https://github.com/quangtuanitmo18/VDT-midterm-web)
   - Pull requests:
     - [Feature/users-data-binding](https://github.com/quangtuanitmo18/VDT-midterm-web/pull/1)
     - [Feature/dockerize-client-server](https://github.com/quangtuanitmo18/VDT-midterm-web/pull/2)
@@ -100,7 +100,7 @@ MongoDB là một cơ sở dữ liệu NoSQL mã nguồn mở, cho phép lưu tr
 
 <br>
 
-#### Test Api trên postman
+#### Test Api on postman
 
 <div align="center">
   <img width="600" src="./assets/images/api-get-list-users.png" alt="api-get-list-users">
@@ -142,7 +142,7 @@ MongoDB là một cơ sở dữ liệu NoSQL mã nguồn mở, cho phép lưu tr
 </div>
 <br>
 
-#### Kết quả khi chạy các test cases
+#### Results when running test cases
 
 <div align="center">
   <img width="600" src="./assets/images/result-test-cases.png" alt="Result of test cases">
@@ -152,12 +152,12 @@ MongoDB là một cơ sở dữ liệu NoSQL mã nguồn mở, cho phép lưu tr
 </div>
 <br>
 
-#### Kết quả hiển thị trên browser
+#### Results displayed on the browser
 
 <div align="center">
   <img width="600" src="./assets/images/user-table.png" alt="user table">
 </div>
 <div align="center">
-  <i>Bảng danh sách các users</i>
+  <i>User list table</i>
 </div>
 <br>

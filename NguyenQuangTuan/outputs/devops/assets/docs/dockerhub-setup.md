@@ -1,23 +1,23 @@
-## Tạo repo trên Docker Hub
+## Create a repository on Docker Hub
 
-Docker Hub là một dịch vụ lưu trữ và chia sẻ các container Docker do Docker Inc. cung cấp. Đây là một phần quan trọng trong hệ sinh thái Docker, giúp các nhà phát triển và tổ chức dễ dàng tìm kiếm, lưu trữ, quản lý và chia sẻ các image Docker. Dưới đây là một số thông tin chi tiết về Docker Hub:
+Docker Hub is a service for storing and sharing Docker containers provided by Docker Inc. It is an essential part of the Docker ecosystem, helping developers and organizations easily find, store, manage, and share Docker images. Below are some details about Docker Hub:
 
-- Chức năng chính
+- Main functions
 
-  - Lưu trữ image Docker: Docker Hub là nơi lưu trữ các image Docker, bao gồm các image chính thức do Docker và các đối tác phát hành, cũng như các image được tạo bởi cộng đồng.
-  - Chia sẻ image: Người dùng có thể chia sẻ image Docker với cộng đồng hoặc trong nhóm phát triển của mình. Docker Hub hỗ trợ việc thiết lập các kho lưu trữ công khai và riêng tư.
-  - Tìm kiếm và tải image: Người dùng có thể tìm kiếm và tải về các image Docker có sẵn từ Docker Hub, giúp dễ dàng triển khai các ứng dụng và dịch vụ.
-  - Tích hợp CI/CD: Docker Hub tích hợp với các hệ thống CI/CD phổ biến như Jenkins, GitLab CI, Travis CI, giúp tự động hóa quá trình xây dựng và đẩy image Docker.
+  - Store Docker images: Docker Hub is where Docker images are stored, including official images released by Docker and its partners, as well as community-created images.
+  - Share images: Users can share Docker images with the community or within their development team. Docker Hub supports setting up public and private repositories.
+  - Search and download images: Users can search and download available Docker images from Docker Hub, making it easy to deploy applications and services.
+  - CI/CD integration: Docker Hub integrates with popular CI/CD systems like Jenkins, GitLab CI, Travis CI, helping automate the process of building and pushing Docker images.
 
-- Các thành phần chính
+- Main components
 
-  - Repositories (Kho lưu trữ): Đây là nơi lưu trữ các image Docker. Có hai loại repository chính:
+  - Repositories: This is where Docker images are stored. There are two main types of repositories:
 
-    - Public repositories: Bất kỳ ai cũng có thể truy cập và tải về các image trong các kho lưu trữ công khai.
-    - Private repositories: Chỉ những người dùng được chỉ định mới có quyền truy cập, phù hợp cho việc lưu trữ các image nội bộ hoặc bảo mật.
+    - Public repositories: Anyone can access and download images in public repositories.
+    - Private repositories: Only designated users have access, suitable for storing internal or secure images.
 
-  - Organizations (Tổ chức): Docker Hub cho phép tạo và quản lý các tổ chức, giúp dễ dàng quản lý quyền truy cập và chia sẻ image Docker trong nhóm phát triển hoặc công ty.
-  - Teams (Nhóm): Trong mỗi tổ chức, người dùng có thể tạo các nhóm và phân quyền truy cập khác nhau cho từng nhóm.
+  - Organizations: Docker Hub allows creating and managing organizations, making it easy to manage access and share Docker images within a development team or company.
+  - Teams: Within each organization, users can create teams and assign different access permissions to each team.
 
 <div align="center">
   <img width="800" src="../images/dockerhub.png" alt="Docker Hub">
@@ -30,9 +30,9 @@ Docker Hub
 </div>
 <br>
 
-Với tài khoản cá nhân miễn phí thì chỉ có thể tạo 1 repo private trên Docker Hub.
+With a free personal account, you can only create 1 private repository on Docker Hub.
 
-Thực hiện tạo 2 repo public trên Docker Hub là `vdt-midterm-api` và `vdt-midterm-web`
+Create 2 public repositories on Docker Hub: `vdt-midterm-api` and `vdt-midterm-web`
 
 <div align="center">
   <img width="800" src="../images/dockerhub-repo.png" alt="Dockerhub repo">

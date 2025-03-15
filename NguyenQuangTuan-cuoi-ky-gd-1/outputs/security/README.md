@@ -1,79 +1,79 @@
 # Security
 
-### 1. Dựng HAProxy Loadbalancer
+### 1. Setting up HAProxy Loadbalancer
 
-Chưa hoàn thành
+Not completed
 
-### 2. Authentication và Authorization
+### 2. Authentication and Authorization
 
-Authentication (xác thực) là quá trình xác định danh tính của người dùng, thường bằng cách kiểm tra thông tin đăng nhập như tên người dùng và mật khẩu. Một trong những phương pháp hiện đại và phổ biến để thực hiện xác thực trong các ứng dụng web và API là sử dụng JWT (JSON Web Tokens).
+Authentication is the process of verifying the identity of a user, typically by checking login information such as username and password. One of the modern and popular methods for implementing authentication in web applications and APIs is using JWT (JSON Web Tokens).
 
-JSON Web Token (JWT) là một chuẩn mở (RFC 7519) để tạo ra token dưới dạng JSON nhằm truyền tải thông tin giữa các bên một cách an toàn. JWT được sử dụng rộng rãi để xác thực và trao quyền (authorization).
+JSON Web Token (JWT) is an open standard (RFC 7519) for creating tokens in JSON format to securely transmit information between parties. JWT is widely used for authentication and authorization.
 
 <div align="center">
   <img width="600" src="./assets/images/jwt.png" alt="a">
 </div>
 <br>
 
-Một JWT bao gồm ba phần chính:
+A JWT consists of three main parts:
 
-- Header: Chứa thông tin về thuật toán ký và loại token.
-- Payload: Chứa các thông tin (claims) như thông tin người dùng, thời gian hết hạn, quyền truy cập, v.v.
-- Signature: Được tạo ra bằng cách ký kết hợp phần header và payload với một khóa bí mật hoặc khóa riêng.
+- Header: Contains information about the signing algorithm and token type.
+- Payload: Contains claims such as user information, expiration time, access rights, etc.
+- Signature: Created by signing the header and payload with a secret key or private key.
 
-Mô hình phổ biến với JWT là stateless lưu `access-token` và `refresh-token` lên phía client ([Phân biệt stateful và stateless authentication](https://www.openidentityplatform.org/blog/stateless-vs-stateful-authentication))
+A common model with JWT is stateless, storing `access-token` and `refresh-token` on the client side ([Difference between stateful and stateless authentication](https://www.openidentityplatform.org/blog/stateless-vs-stateful-authentication)).
 
-Trong bài lab này sẽ thực hiện trả về `access-token` và `refresh-token` khi người dùng đăng nhập hoặc đăng ký vào hệ thống. Với `access-token` sẽ được lưu ở local storage còn `refresh-token` lưu ở cookie. Việc phân quyền giữa `user` và `admin` thông qua 1 trường `role` được lưu vào payload của JWT (không lưu những thông tin nhạy cảm ở payload của jwt).
+In this lab, `access-token` and `refresh-token` will be returned when a user logs in or registers in the system. The `access-token` will be stored in local storage, while the `refresh-token` will be stored in a cookie. Authorization between `user` and `admin` is done through a `role` field stored in the payload of the JWT (do not store sensitive information in the JWT payload).
 
-Khi đi vào 1 endpoint sẽ cài đặt 1 middleware `accessTokenValidator` để xác định token đưa vào qua header có phải token của hệ thống cung cấp hay không. Còn đối với những endpoint yêu cầu quyền `admin` sau khi đi qua middleware `accessTokenValidator` sẽ đi qua 1 middleware nữa là `isAdminValidator`, middleware này sẽ lấy thông tin `role` ở trên payload của token ra để biết được quyền là `user` hay `admin`
-Chi tiết xem tạo pr: [VDT-midterm-api/authen-author](https://github.com/quangtuanitmo18/VDT-midterm-api/pull/8)
+When accessing an endpoint, an `accessTokenValidator` middleware will be set up to verify if the token provided in the header is issued by the system. For endpoints requiring `admin` rights, after passing through the `accessTokenValidator` middleware, another middleware called `isAdminValidator` will be used. This middleware will extract the `role` information from the token payload to determine if the role is `user` or `admin`.
+For details, see the PR: [VDT-midterm-api/authen-author](https://github.com/quangtuanitmo18/VDT-midterm-api/pull/8)
 
-**Các hình ảnh demo**
+**Demo images**
 
-Các bước dưới đây chỉ là mô phỏng Authentication và Authorizartion, quy trình này trong thực tế sẽ phức tạp hơn (ví dụ: Đăng ký xong cần verify email, token phải được verify mới dùng được, mô hình phân quyền RBAC,... )
+The steps below are just a simulation of Authentication and Authorization; in reality, the process will be more complex (e.g., after registration, email verification is required, tokens must be verified before use, RBAC authorization model, etc.)
 
-Khi người dùng đăng nhập qua endpoint `register` sẽ nhận về token
+When a user registers through the `register` endpoint, they will receive a token.
 
 <div align="center">
   <img width="1000" src="./assets/images/secur-1.png" alt="">
 </div>
 <br>
 
-Decode cái `access-token` ra thấy các thông tin payload như sau
+Decoding the `access-token` reveals the following payload information:
 
 <div align="center">
   <img width="1000" src="./assets/images/secur-2.png" alt="">
 </div>
 <br>
 
-Khi đăng nhập qua endpoint `login` cũng sẽ nhận về token
+When logging in through the `login` endpoint, a token will also be received.
 
 <div align="center">
   <img width="1000" src="./assets/images/secur-3.png" alt="">
 </div>
 <br>
 
-Thêm middleware `accessTokenValidator` và `isAdminValidator` vào endpoint `create`, `update` và `delete`. Vậy là muốn thực hiện được các endpoint này thì cần có valid token và cần có role `admin`
+Add the `accessTokenValidator` and `isAdminValidator` middleware to the `create`, `update`, and `delete` endpoints. Thus, to execute these endpoints, a valid token and `admin` role are required.
 
 <div align="center">
   <img width="1000" src="./assets/images/secur-6.png" alt="">
 </div>
 <br>
 
-Thực hiện endpoint `create` với token có role `user` sẽ trả về `403`
+Executing the `create` endpoint with a token having the `user` role will return `403`.
 
 <div align="center">
   <img width="1000" src="./assets/images/secur-7.png" alt="">
 </div>
 <br>
-Get list user ra vẫn sẽ thực hiện bình thường
+Getting the user list will still work normally.
 
 <div align="center">
   <img width="1000" src="./assets/images/secur-8.png" alt="">
 </div>
 <br>
 
-Giờ lấy 1 user có role `admin` đăng nhập vào hệ thống, và lấy token đó để thực hiện endpoint `create`, `update`, `delete`
+Now, log in with a user having the `admin` role, and use that token to execute the `create`, `update`, `delete` endpoints.
 
 <div align="center">
   <img width="1000" src="./assets/images/secur-9.png" alt="">
@@ -88,8 +88,8 @@ Giờ lấy 1 user có role `admin` đăng nhập vào hệ thống, và lấy t
 </div>
 <br>
 
-Quay lại thực hiện các endpoint `create`, `update`, `delete` bằng token trên
-`create` trả về `200` còn `update` và `delete` trả về status code `204`
+Execute the `create`, `update`, `delete` endpoints with the above token.
+`create` returns `200`, while `update` and `delete` return status code `204`.
 
 <div align="center">
   <img width="1000" src="./assets/images/secur-12.png" alt="">
@@ -103,11 +103,11 @@ Quay lại thực hiện các endpoint `create`, `update`, `delete` bằng token
   <img width="1000" src="./assets/images/secur-14.png" alt="">
 </div>
 
-### 3. Ratelimit cho Endpoint của api Service
+### 3. Rate Limiting for API Service Endpoints
 
-Rate Limiting (giới hạn tần suất) là kỹ thuật dùng để kiểm soát số lượng yêu cầu mà một người dùng hoặc ứng dụng có thể gửi đến một dịch vụ trong một khoảng thời gian nhất định. Điều này giúp ngăn chặn việc sử dụng quá mức tài nguyên hoặc các cuộc tấn công DDoS.
+Rate Limiting is a technique used to control the number of requests a user or application can send to a service within a certain period. This helps prevent resource overuse or DDoS attacks.
 
-`express-rate-limit` là một package phổ biến cho Node.js và Express, cho phép dễ dàng triển khai rate limiting.
+`express-rate-limit` is a popular package for Node.js and Express, allowing easy implementation of rate limiting.
 
 <div align="center">
   <img width="1000" src="./assets/images/secur-15.png" alt="">
@@ -120,22 +120,22 @@ Rate Limiting (giới hạn tần suất) là kỹ thuật dùng để kiểm so
 </div>
 <br>
 
-Triển khai `express-rate-limit` chi tiết xem lại pr [VDT-midterm-api/rate-limiting](https://github.com/quangtuanitmo18/VDT-midterm-api/pull/10)
+For detailed implementation of `express-rate-limit`, see the PR [VDT-midterm-api/rate-limiting](https://github.com/quangtuanitmo18/VDT-midterm-api/pull/10)
 
-Cấu hình của `express-rate-limit` sẽ như sau
+The configuration of `express-rate-limit` is as follows:
 
-- `windowMs`: Đây là khoảng thời gian tính theo milliseconds mà giới hạn sẽ được áp dụng
-- `max`: Đây là số lượng request tối đa mà một IP có thể gửi trong mỗi window
-- `standardHeaders`: Khi giá trị này là true, các thông tin về giới hạn tần suất sẽ được trả về trong các header tiêu chuẩn như `RateLimit-Limit`, `RateLimit-Remaining`, và `RateLimit-Reset`
-- `legacyHeaders`: Khi giá trị này là false, các header cũ như `X-RateLimit-Limit`, `X-RateLimit-Remaining`, và `X-RateLimit-Reset` sẽ bị vô hiệu hóa
-- `statusCode`: ở đây trả về status code là `429` mang ý nghĩa là `TooManyRequests`
+- `windowMs`: The time window in milliseconds for which the limit is applied.
+- `max`: The maximum number of requests an IP can send within each window.
+- `standardHeaders`: When set to true, rate limit information will be returned in standard headers like `RateLimit-Limit`, `RateLimit-Remaining`, and `RateLimit-Reset`.
+- `legacyHeaders`: When set to false, old headers like `X-RateLimit-Limit`, `X-RateLimit-Remaining`, and `X-RateLimit-Reset` will be disabled.
+- `statusCode`: Here, it returns status code `429`, meaning `TooManyRequests`.
 
 <div align="center">
   <img width="1000" src="./assets/images/secur-16.png" alt="">
 </div>
 <br>
 
-Truy cập vào trình duyệt và thực hiện quá 10 request trong vòng 1 phút sẽ nhận được `429 Too Many Requests`
+Access the browser and make more than 10 requests within 1 minute to receive `429 Too Many Requests`.
 
 <div align="center">
   <img width="1000" src="./assets/images/secur-17.png" alt="">

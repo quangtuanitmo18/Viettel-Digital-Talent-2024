@@ -1,6 +1,6 @@
-## Setup Jenkins server (cicd-qa-server: 192.168.64.140) trên port 8080
+## Setup Jenkins server (cicd-qa-server: 192.168.64.140) on port 8080
 
-Jenkins là một công cụ mã nguồn mở viết bằng Java sử dụng để tự động hóa các tác vụ liên quan đến phát triển phần mềm, đặc biệt là trong CI/CD. Jenkins có thể kết hợp được với hầu hết các công cụ khác của hệ thống tích hợp liên tục với nhiều nền tảng khác nhau. Ngoài ra, cộng đồng sử dụng Jenkins rất lớn nên cũng rất dễ trong việc sử dụng và hỗ trợ khi gặp khó khăn.
+Jenkins is an open-source tool written in Java used to automate tasks related to software development, especially in CI/CD. Jenkins can integrate with most other tools in the continuous integration system across various platforms. Additionally, the Jenkins community is large, making it easy to use and get support when needed.
 
 <div align="center">
   <img width="600" src="../images/jenkins.png" alt="jenkins">
@@ -11,37 +11,37 @@ Jenkins là một công cụ mã nguồn mở viết bằng Java sử dụng đ�
 </div>
 <br>
 
-### Cài đặt Jenkins
+### Install Jenkins
 
 [jenkins-setup.sh](../scripts/jenkins-setup.sh)
 
-`touch jenkins-setup.sh && chmod +x jenkins-setup.sh && vim jenkins-setup.sh` tiến hành tạo thư mục để lưu cấu hình cài đặt các ứng dụng, di chuyển đến thư mục đó tạo một file script để cài đặt jenkins và cấp quyền thực thi file đó.
+`touch jenkins-setup.sh && chmod +x jenkins-setup.sh && vim jenkins-setup.sh` create a directory to store the configuration for installing applications, navigate to that directory, create a script file to install Jenkins, and grant execution permissions to that file.
 
-Chạy câu lệnh `./jenkins-setup.sh` để cài đặt jenkins. Port mặc định của jenkins là 8080.
+Run the command `./jenkins-setup.sh` to install Jenkins. The default port for Jenkins is 8080.
 
 <div align="center">
   <img width="600" src="../images/jenkins-installed.png" alt="jenkins">
 </div>
 
-Sau khi cài đặt thành công jenkins, vào browser và truy cập và đường link `192.168.64.140:8080`
+After successfully installing Jenkins, open a browser and access the link `192.168.64.140:8080`
 
 <div align="center">
   <img width="600" src="../images/jenkins-login.png" alt="jenkins">
 </div>
 
-Để lấy được mật khẩu của user root trên jenkins cần chạy lệnh `cat /var/lib/jenkins/secrets/initialAdminPassword`
+To get the root user's password on Jenkins, run the command `cat /var/lib/jenkins/secrets/initialAdminPassword`
 
 <div align="center">
   <img width="600" src="../images/jenkins-initial-password.png" alt="initial admin password">
 </div>
 
-Tiếp theo install các plugin trên Jenkins theo mặc định.
+Next, install the default plugins on Jenkins.
 
 <div align="center">
   <img width="600" src="../images/jenkins-getting-started.png" alt="Jenkins getting started">
 </div>
 
-Tiếp đến cần tạo tài khoản và thiết lập jenkins url
+Then create an account and set up the Jenkins URL.
 
 <div align="center">
   <img width="600" src="../images/jenkins-create-acc.png" alt="Create acc">
@@ -51,27 +51,27 @@ Tiếp đến cần tạo tài khoản và thiết lập jenkins url
   <img width="600" src="../images/jenkins-setting-url.png" alt="Jenkins url">
 </div>
 
-Sau khi hoàn thành các bước trên, cài đặt thành công vào màn hình quản lý của jenkins.
+After completing the above steps, you will successfully install and access the Jenkins management screen.
 
 <div align="center">
   <img width="600" src="../images/jenkins-dashboard.png" alt="Jenkins">
 </div>
 <br>
 
-Tiếp theo, tương tự sẽ cài đặt docker và docker-compose cho Jenkins server ([docker-setup.sh](../scripts/docker-setup.sh))
+Next, similarly install docker and docker-compose for the Jenkins server ([docker-setup.sh](../scripts/docker-setup.sh))
 
 `touch docker-setup.sh && chmod +x docker-setup.sh && vim docker-setup.sh`
 
-`./docker-setup.sh` chạy script cài đặt docker và kiểm tra version được kết quả như dưới đây
+`./docker-setup.sh` run the script to install docker and check the version as shown below
 
 <div align="center">
   <img width="600" src="../images/jenkisn-docker-dockercompose-ver.png" alt="Docker and docker-compose version">
 </div>
 <br>
 
-`usermod -aG docker jenkins` thêm user jenkins vào group docker để jenkins có thể sử dụng docker trong Jenkins CICD Pipeline
+`usermod -aG docker jenkins` add the Jenkins user to the docker group so Jenkins can use docker in the Jenkins CICD Pipeline.
 
-Cài đặt các plugin sau lên jenkins server
+Install the following plugins on the Jenkins server:
 
 - Gitlab
 - Docker
@@ -96,53 +96,53 @@ Cài đặt các plugin sau lên jenkins server
   <img width="600" src="../images/jenkins-plugin-5.png" alt="">
 </div>
 
-#### Tích hợp Gitlab lên Jenkins server
+#### Integrate Gitlab with Jenkins server
 
-Tại giao diện Jenkins nhấn chọn `Manage Jenkins -> System` tìm đến gitlab và tiến hành config như dưới đây
+In the Jenkins interface, select `Manage Jenkins -> System`, find Gitlab, and configure as shown below.
 
 <div align="center">
   <img width="800" src="../images/jenkins-config-gitlab-1.png" alt="">
 </div>
 
-Khi nhấn chọn thêm credentials phía trên sẽ mở ra popup để tạo Credential như dưới đây tiến hành nhập thông tin token chính là access token đã tạo bên gitlab server
+When selecting add credentials above, a popup will open to create a Credential as shown below. Enter the token information, which is the access token created on the Gitlab server.
 
 <div align="center">
   <img width="800" src="../images/jenkins-config-gitlab-2.png" alt="">
 </div>
 
-Quay lại chọn credentials vừa tạo nhấn test connect và đã thành công
+Go back, select the newly created credentials, click test connect, and it will be successful.
 
 <div align="center">
   <img width="800" src="../images/jenkins-config-gitlab-3.png" alt="">
 </div>
 <br>
 
-#### Tích hợp Sonarqube lên Jenkins server
+#### Integrate Sonarqube with Jenkins server
 
-Tương tự như trên khi tích hợp Gitlab vào Jenkins thì trước tiên cần có 1 token từ Sonarqube.
-Sau khi có Sonarqube token tiến hành tạo credential trên Jenkins
-Để thêm được credential mới lên Jenkins chọn `Dashboard -> Manage Jenkins -> Credentials -> System -> Global Credetial`
+Similar to integrating Gitlab into Jenkins, you first need a token from Sonarqube.
+After obtaining the Sonarqube token, create a credential on Jenkins.
+To add a new credential to Jenkins, select `Dashboard -> Manage Jenkins -> Credentials -> System -> Global Credential`.
 
 <div align="center">
   <img width="800" src="../images/jenkins-config-sonar-1.png" alt="">
 </div>
 <br>
 
-Config system Sonarqube dưới đây (phần server auten token: chọn credentials mới tạo phía trên)
+Configure the Sonarqube system as shown below (for the server auth token, select the newly created credentials above).
 
 <div align="center">
   <img width="800" src="../images/jenkins-config-sonar-2.png" alt="">
 </div>
 <br>
 
-#### Tích hợp Telegram lên Jenkins server
+#### Integrate Telegram with Jenkins server
 
-Sau khi tiến hành các bước cài đặt bot bên Telegram sẽ nhận được `Token` và `chatId`
+After completing the bot setup steps on Telegram, you will receive a `Token` and `chatId`.
 
-Tiến hành tạo credential trên Jenkins cho `Token` và `chatId`
-Để thêm được credential mới lên Jenkins chọn `Dashboard -> Manage Jenkins -> Credentials -> System -> Global Credetial`
+Create a credential on Jenkins for the `Token` and `chatId`.
+To add a new credential to Jenkins, select `Dashboard -> Manage Jenkins -> Credentials -> System -> Global Credential`.
 
-`secret` là `Token` và `chatId` nhận được từ Telegram
+`secret` is the `Token` and `chatId` received from Telegram.
 
 <div align="center">
   <img width="800" src="../images/jenkins-config-telegram-token.png" alt="">
@@ -152,95 +152,97 @@ Tiến hành tạo credential trên Jenkins cho `Token` và `chatId`
   <img width="800" src="../images/jenkins-config-telegram-chatId.png" alt="">
 </div>
 
-Config system TelegramBot dưới đây (Telegram Bot name: là `username` của bot tạo bên Telegram và `Telegram Bot token` là `Token` phía trên)
+Configure the TelegramBot system as shown below (Telegram Bot name: is the `username` of the bot created on Telegram and `Telegram Bot token` is the `Token` above).
 
 <div align="center">
   <img width="800" src="../images/jenkins-config-telegram-1.png" alt="">
 </div>
 
-#### Tạo pipeline trên jenkins
+#### Create a pipeline on Jenkins
 
-sẽ có 2 pipeline là `pipeline-vdt-midterm-api` và `pipeline-vdt-midterm-web`
-các bước dưới đây thực hiện trên `pipeline-vdt-midterm-api`, đối với `pipeline-vdt-midterm-web` thực hiện tương tự.
+There will be 2 pipelines: `pipeline-vdt-midterm-api` and `pipeline-vdt-midterm-web`.
+The steps below are performed on `pipeline-vdt-midterm-api`, for `pipeline-vdt-midterm-web` do the same.
 
-Chọn `New Item` ở dashboard của jenkins để tiền hành tạo pipeline
+Select `New Item` on the Jenkins dashboard to create a pipeline.
 
 <div align="center">
   <img width="800" src="../images/jenkins-create-pipeline.png" alt="">
 </div>
 <br>
 
-Phần General tích chọn `Discard old builds` và lưu lại 10 bản chạy gần nhất
+In the General section, check `Discard old builds` and keep the last 10 builds.
 
 <div align="center">
   <img width="800" src="../images/jenkins-config-pipeline-1.png" alt="">
 </div>
 <br>
 
-Tiếp tục ở General, build triggers như dưới đây để Jenkins CICD Pipeline chạy cả được những action như push, merge code
+Continue in General, build triggers as shown below to allow the Jenkins CICD Pipeline to run actions such as push, merge code.
 
 <div align="center">
   <img width="800" src="../images/jenkins-config-pipeline-2.png" alt="">
 </div>
 <br>
 
-phần pipeline chọn như sau và URL chính là URL bên project ở gitlab
+In the pipeline section, select as follows, and the URL is the URL of the project on Gitlab.
 
 <div align="center">
   <img width="800" src="../images/jenkins-config-pipeline-3.png" alt="">
 </div>
 <br>
 
-Tiếp tục thêm credentials của gitlab. Credentials đây chính là account có quyền admin trên gitlab, nếu không Jenkins CICD Pipeline chạy sẽ không clone được code.
+Continue to add Gitlab credentials. These credentials are for an account with admin rights on Gitlab, otherwise, the Jenkins CICD Pipeline will not be able to clone the code.
 
 <div align="center">
   <img width="800" src="../images/jenkins-config-pipeline-4.png" alt="">
 </div>
 <br>
-Đến phần Pipeline, branch ở đây chọn là main và release vậy là khi merge request hoặc push từ 2 nhánh này Jenkins mới chạy. Tránh trường hợp cứ push và tạo merge request ở 1 nhánh bất kì thì pipeline đều chạy.
+
+In the Pipeline section, select the main and release branches so that Jenkins only runs when there are merge requests or pushes from these branches. This prevents the pipeline from running for any push or merge request on any branch.
 
 <div align="center">
   <img width="800" src="../images/jenkins-config-pipeline-5.png" alt="">
 </div>
 <br>
 
-#### Tạo Token của user admin trên Jenkins
+#### Create an admin user token on Jenkins
 
-Bước cuối cùng tích hợp Gitlab với Jenkins chính là thiết lập webhook. Để tạo được webhook ở gitlab thì cần có API token của user admin trên Jenkins
+The final step to integrate Gitlab with Jenkins is to set up a webhook. To create a webhook on Gitlab, you need the API token of the admin user on Jenkins.
 
-`Dashboard -> user -> configure` để thiết lập API token trên Jenkins
+`Dashboard -> user -> configure` to set up the API token on Jenkins.
 
 <div align="center">
   <img width="800" src="../images/jenkins-create-token.png" alt="">
 </div>
 <br>
 
-#### Tạo thư mục quản lý dự án
+#### Create a project management directory
 
-Chạy lệnh `mkdir /home/projects/VDT-midterm-api` và `mkdir /home/projects/VDT-midterm-web` để tạo 2 thư mục lưu trữ dự án
+Run the command `mkdir /home/projects/VDT-midterm-api` and `mkdir /home/projects/VDT-midterm-web` to create 2 directories to store the projects.
 
 <div align="center">
   <img width="800" src="../images/jenkins-create-projects-folder.png" alt="">
 </div>
 <br>
-Tiếp đến trong pipeline sẽ dùng user `jenkins` (user mặc định được tạo ra khi cài Jenkins server). Sẽ có những command khi thực hiện với user `jenkins` cần quyền sudo và hỏi mật khẩu nên cần đưa user `jenkins` vào trong group sudo và chạy command không cần nhập mật khẩu.
 
-chạy `visudo` và thêm `jenkins ALL=(ALL:ALL) NOPASSWD: ALL` vào phần `#Allow members of group sudo to execute any command`
+Next, in the pipeline, use the `jenkins` user (the default user created when installing the Jenkins server). Some commands executed with the `jenkins` user require sudo privileges and ask for a password, so you need to add the `jenkins` user to the sudo group and allow it to run commands without a password.
+
+Run `visudo` and add `jenkins ALL=(ALL:ALL) NOPASSWD: ALL` under `#Allow members of group sudo to execute any command`.
 
 <div align="center">
   <img width="800" src="../images/jenkins-user-sudo.png" alt="">
 </div>
 <br>
 
-**_Ví dụ:_**
-Code trên Gitlab sau khi được Jenkins pull về sẽ nằm trong workspace của nó.
+**_Example:_**
+The code on Gitlab, after being pulled by Jenkins, will be in its workspace.
 
 <div align="center">
   <img width="800" src="../images/jenkins-workspace.png" alt="">
 </div>
 <br>
 
-Cần tiến hành copy code từ workspace của Jenkins về thư mục quản lý dự án đã tạo ở trên (`VDT-midterm-api` và `VDT-midterm-web`) và cấp quyền sở hữu và quyền thực thi trên thư mục đó cho user Jenkins. Trong pipeline có 1 stage là `checkout source` giúp làm điều này.
+You need to copy the code from the Jenkins workspace to the project management directory created above (`VDT-midterm-api` and `VDT-midterm-web`) and grant ownership and execution permissions on that directory to the Jenkins user. In the pipeline, there is a stage called `checkout source` to help do this.
 
 ```shell
 stage('Checkout source' ){
@@ -253,36 +255,36 @@ stage('Checkout source' ){
 }
 ```
 
-Với stage trên do có các command dùng đến quyền `sudo` và hiện tại trong pipeline là dùng user `jenkins` nên mới cần đưa user `jenkins` vào group `sudo` như trên và cấp quyền không cần dùng mật khẩu để pipeline không bị ngắt quãng.
+With the above stage, since there are commands using `sudo` and currently in the pipeline, the `jenkins` user is used, you need to add the `jenkins` user to the `sudo` group as above and allow it to run commands without a password to prevent the pipeline from being interrupted.
 
-#### Tạo SSH key
+#### Create an SSH key
 
-Mục đích của việc tạo ssh key là để trong giai đoạn CD sẽ cần ssh đến server chạy dịch vụ `web` và `api` để pull image từ Docker Hub
+The purpose of creating an ssh key is that during the CD stage, you need to ssh to the server running the `web` and `api` services to pull the image from Docker Hub.
 
-Trong server Jenkins tiến hành tạo khóa ssh và access để có thể truy cập sang `app-server-1: 192.168.64.142` và `app-server-2: 192.168.64.144` như sau:
+On the Jenkins server, create an ssh key and access to be able to connect to `app-server-1: 192.168.64.142` and `app-server-2: 192.168.64.144` as follows:
 
-`ssh-keygen -t rsa` tạo ra một cặp khóa public và khóa private RSA cho việc xác thực truy cập từ xa cho Jenkins CI/CD Pipeline.
+`ssh-keygen -t rsa` generates a pair of public and private RSA keys for remote access authentication for the Jenkins CI/CD Pipeline.
 
 <div align="center">
   <img width="800" src="../images/jenkins-keygen.png" alt="">
 </div>
 <br>
 
-`ssh-copy-id -i ~/.ssh/id_rsa.pub tuan@192.168.64.142` sao chép khóa public của người dùng lên server `app-server-1`. Với `app-server-2` thực hiện tương tự.
+`ssh-copy-id -i ~/.ssh/id_rsa.pub tuan@192.168.64.142` copies the user's public key to the `app-server-1`. Do the same for `app-server-2`.
 
 <div align="center">
   <img width="800" src="../images/jenkins-copy-access.png" alt="">
 </div>
 <br>
 
-ssh vào từ server `app-server-1` và không cần nhập mật khẩu đã thành công.
+SSH from the Jenkins server to `app-server-1` without entering a password is successful.
 
 <div align="center">
   <img width="800" src="../images/jenkins-ssh-server.png" alt="">
 </div>
 <br>
 
-Lưu lại private key rồi tạo credential trên Jenkins server với cái private key đó để có thể dùng được trong pipeline CI/CD
+Save the private key and create a credential on the Jenkins server with that private key to use in the CI/CD pipeline.
 
 <div align="center">
   <img width="800" src="../images/jenkins-ssh-private-key.png" alt="">
