@@ -26,6 +26,8 @@ To run the Sonarqube server, execute the following command with docker:
 
 After successfully running the docker container, access the address `192.168.64.140:9000` to proceed with the initial setup steps for Sonarqube.
 
+(admin/1811)
+
 #### Create a project on Sonarqube from GitLab
 
 <div align="center">
